@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi Cloud DevOps with AI by Veera NareshIT — by Veera</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1a2235;
+  --border:#2a3450;--text:#e2e8f0;--muted:#8892a4;
+  --accent:#6ee7f7;--purple:#a78bfa;
+}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* PAGE SYSTEM */
+.page{display:none;min-height:100vh;animation:fadeIn .35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* BG */
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 20%,rgba(255,153,0,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%,rgba(0,137,214,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 50%,rgba(110,231,247,.04) 0%,transparent 70%);
+  animation:mesh 8s ease-in-out infinite alternate}
+@keyframes mesh{0%{opacity:.6}100%{opacity:1}}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.02)1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02)1px,transparent 1px);
+  background-size:60px 60px}
+
+/* NAVBAR */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 32px;
+  background:rgba(10,14,26,.95);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border)}
+.logo{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  cursor:pointer;text-decoration:none;letter-spacing:-.3px;border:none;display:inline}
+.nav-links{display:flex;gap:2px;list-style:none;align-items:center}
+.nav-links button{
+  font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:500;
+  color:var(--muted);cursor:pointer;background:none;border:none;
+  padding:7px 13px;border-radius:8px;transition:all .2s;white-space:nowrap}
+.nav-links button:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.nav-active{color:var(--accent)!important;background:rgba(110,231,247,.07)!important}
+.nav-cta{color:var(--accent)!important;border:1px solid rgba(110,231,247,.3)!important}
+.nav-cta:hover{background:rgba(110,231,247,.08)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;border:none;background:none}
+.hamburger span{display:block;width:22px;height:2px;background:var(--muted);border-radius:2px}
+
+/* ========= HOME ========= */
+.hero{
+  position:relative;z-index:1;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:90px 20px 50px;max-width:100%;overflow:hidden}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(110,231,247,.08);border:1px solid rgba(110,231,247,.2);
+  color:var(--accent);font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:3px;text-transform:uppercase;
+  padding:7px 20px;border-radius:30px;margin-bottom:28px}
+.dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.2rem,6vw,5rem);
+  font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:20px}
+.hero h1 .l1{display:block;color:#fff}
+.hero h1 .l2{
+  display:block;
+  background:linear-gradient(90deg,#FF9900 0%,#f5576c 30%,var(--purple) 60%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:.92rem;color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:36px}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-p{
+  display:inline-flex;align-items:center;gap:8px;padding:12px 28px;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  color:#0a0e1a;font-weight:700;font-size:.86rem;border-radius:10px;
+  border:none;cursor:pointer;transition:all .25s;font-family:inherit;
+  box-shadow:0 6px 20px rgba(110,231,247,.2)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(110,231,247,.3)}
+.btn-s{
+  display:inline-flex;align-items:center;gap:8px;padding:12px 28px;
+  border:1px solid var(--border);color:var(--text);font-weight:600;font-size:.86rem;
+  border-radius:10px;cursor:pointer;background:rgba(255,255,255,.03);transition:all .25s;font-family:inherit}
+.btn-s:hover{border-color:rgba(110,231,247,.4);background:rgba(110,231,247,.05);transform:translateY(-2px)}
+
+/* Stats */
+.stats-bar{
+  position:relative;z-index:1;display:flex;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:rgba(17,24,39,.7);overflow-x:auto}
+.stat-item{
+  flex:1;min-width:120px;padding:20px 12px;text-align:center;
+  border-right:1px solid var(--border);transition:background .2s}
+.stat-item:last-child{border-right:none}
+.stat-item:hover{background:rgba(110,231,247,.04)}
+.stat-n{
+  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:5px}
+.stat-l{font-size:.68rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
+
+/* Course cards */
+.home-section{position:relative;z-index:1;padding:48px 24px;max-width:960px;margin:0 auto}
+.sec-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+.sec-sub{color:var(--muted);font-size:.86rem;margin-bottom:36px;line-height:1.6}
+
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.cards-grid{grid-template-columns:1fr}}
+
+/* Trainer badge */
+.trainer-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,rgba(255,153,0,.1),rgba(167,139,250,.1));
+  border:1px solid rgba(255,153,0,.25);
+  border-radius:40px;padding:8px 20px 8px 8px;
+  margin-bottom:20px}
+.trainer-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,#FF9900,var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;font-weight:800;color:#fff;
+  font-family:'Syne',sans-serif;flex-shrink:0}
+.trainer-info{text-align:left}
+.trainer-name{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--text)}
+.trainer-role{font-size:.7rem;color:var(--muted)}
+.card{
+  position:relative;background:var(--surface);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;cursor:pointer;
+  display:flex;flex-direction:column;transition:all .3s ease}
+.card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.12);box-shadow:0 18px 45px rgba(0,0,0,.4)}
+.card-top{padding:22px 22px 16px;position:relative;overflow:hidden;flex:1}
+.card-glow{position:absolute;top:-15px;right:-15px;width:90px;height:90px;border-radius:50%;opacity:.15;filter:blur(22px);transition:opacity .3s}
+.card:hover .card-glow{opacity:.3}
+.card-ico{font-size:2rem;margin-bottom:12px;display:block;position:relative;z-index:1}
+.card-ttl{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:7px;position:relative;z-index:1}
+.card-dsc{font-size:.79rem;color:var(--muted);line-height:1.55;position:relative;z-index:1}
+.card-bot{
+  padding:12px 22px 18px;display:flex;align-items:center;
+  justify-content:space-between;border-top:1px solid rgba(255,255,255,.05)}
+.card-tags{display:flex;gap:7px;flex-wrap:wrap}
+.ctag{
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:3px 9px;
+  border-radius:20px;background:rgba(255,255,255,.05);color:var(--muted);
+  border:1px solid rgba(255,255,255,.07)}
+.card-arr{
+  width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;transition:all .3s;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.card:hover .card-arr{background:var(--accent);color:#0a0e1a;border-color:var(--accent);transform:rotate(45deg)}
+
+.c-aws .card-glow{background:#FF9900}.c-aws .card-ttl{color:#FF9900}
+.c-azure .card-glow{background:#0089D6}.c-azure .card-ttl{color:#0089D6}
+.c-gcp .card-glow{background:#4285F4}.c-gcp .card-ttl{color:#4285F4}
+.c-devops .card-glow{background:#38ef7d}.c-devops .card-ttl{color:#38ef7d}
+.c-ai .card-glow{background:var(--purple)}.c-ai .card-ttl{color:var(--purple)}
+.c-proj .card-glow{background:#f5576c}.c-proj .card-ttl{color:#f5576c}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.skills-grid{grid-template-columns:1fr}}
+.skill-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:18px;display:flex;gap:12px;align-items:flex-start;transition:border-color .2s}
+.skill-item:hover{border-color:rgba(110,231,247,.2)}
+.skill-ico{width:34px;height:34px;background:rgba(110,231,247,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.skill-item h4{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:700;margin-bottom:3px}
+.skill-item p{font-size:.75rem;color:var(--muted);line-height:1.5}
+.hr{height:1px;background:var(--border);margin:0 32px}
+
+/* ===== TRAINER INTRO ===== */
+
+/* ===== TRAINER INTRO ===== */
+.trainer-intro-card{
+  display:flex;flex-direction:column;align-items:center;gap:36px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:24px;padding:48px 40px;
+  position:relative;overflow:hidden}
+.trainer-intro-card::before{
+  content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,153,0,.06) 0%,transparent 70%);
+  pointer-events:none}
+
+/* Photo — dead center */
+.ti-photo-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  gap:14px;text-align:center;width:100%}
+.ti-avatar{
+  position:relative;width:220px;height:220px;border-radius:50%;
+  margin:0 auto}
+.ti-photo{
+  width:220px;height:220px;border-radius:50%;
+  object-fit:cover;object-position:center top;
+  position:relative;z-index:1;display:block;
+  box-shadow:0 0 0 5px #1a2235,0 0 0 7px #FF9900,0 20px 60px rgba(255,153,0,.35)}
+.ti-fallback{
+  width:220px;height:220px;border-radius:50%;
+  background:linear-gradient(135deg,#FF9900 0%,#f5576c 40%,var(--purple) 100%);
+  display:none;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;color:#fff;
+  box-shadow:0 0 0 5px #1a2235,0 0 0 7px #FF9900,0 20px 60px rgba(255,153,0,.35)}
+.ti-avatar-ring{
+  position:absolute;inset:-8px;border-radius:50%;z-index:0;
+  background:conic-gradient(#FF9900,#f5576c,var(--purple),var(--accent),#FF9900);
+  animation:spin 5s linear infinite;filter:blur(2px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ti-name{
+  font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;
+  color:#fff;margin:0}
+.ti-org-pill{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--accent);padding:5px 16px;border-radius:30px;
+  background:rgba(110,231,247,.08);border:1px solid rgba(110,231,247,.2)}
+.ti-role-line{font-size:.92rem;color:var(--muted);font-style:italic}
+.ti-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:500px}
+.ti-tag{
+  font-size:.72rem;padding:4px 12px;border-radius:20px;
+  background:rgba(255,255,255,.05);color:var(--muted);
+  border:1px solid rgba(255,255,255,.09)}
+
+/* Bio */
+.ti-bio-wrap{width:100%;max-width:820px;display:flex;flex-direction:column;gap:12px}
+.ti-bio{font-size:.92rem;color:var(--muted);line-height:1.85;text-align:center}
+.ti-bio strong{color:var(--text)}
+
+/* Stats */
+.ti-stats{
+  display:flex;width:100%;max-width:820px;
+  border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.ti-stat{
+  flex:1;padding:18px 8px;text-align:center;
+  border-right:1px solid var(--border);transition:background .2s}
+.ti-stat:last-child{border-right:none}
+.ti-stat:hover{background:rgba(110,231,247,.04)}
+.ti-stat-n{
+  display:block;font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:5px}
+.ti-stat-l{font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+
+/* Section label */
+.ti-section-label{
+  width:100%;max-width:820px;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;
+  letter-spacing:3px;text-transform:uppercase;color:var(--accent);
+  padding-bottom:8px;border-bottom:1px solid var(--border)}
+
+/* Highlights */
+.ti-highlights{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:12px;width:100%;max-width:820px}
+.ti-highlight{
+  display:flex;align-items:flex-start;gap:12px;padding:16px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;transition:all .2s}
+.ti-highlight:hover{background:rgba(110,231,247,.05);border-color:rgba(110,231,247,.18)}
+.ti-hi-icon{font-size:1.3rem;flex-shrink:0}
+.ti-highlight strong{display:block;font-size:.84rem;color:var(--text);margin-bottom:4px;font-family:'Syne',sans-serif;font-weight:700}
+.ti-highlight small{font-size:.75rem;color:var(--muted);line-height:1.5}
+
+/* Certifications */
+.ti-certs{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px;width:100%;max-width:820px}
+.cert-card{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 14px;border-radius:14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  transition:all .25s;position:relative;overflow:hidden}
+.cert-card::before{
+  content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent)}
+.cert-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.18);box-shadow:0 8px 28px rgba(0,0,0,.3)}
+.cert-card:hover::before{opacity:1}
+.cert-logo{
+  width:52px;height:40px;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0}
+.cert-info{flex:1;min-width:0}
+.cert-name{font-family:'Syne',sans-serif;font-size:.76rem;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:3px}
+.cert-level{font-size:.68rem;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:2px}
+.cert-issuer{font-size:.68rem;color:var(--muted)}
+.cert-badge{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:700;color:#fff}
+
+/* Cert border accents */
+.cert-aws{border-left:3px solid #FF9900}
+.cert-azure{border-left:3px solid #0089D6}
+.cert-k8s{border-left:3px solid #326CE5}
+.cert-tf{border-left:3px solid #7B42BC}
+.cert-gcp{border-left:3px solid #4285F4}
+.cert-docker{border-left:3px solid #2496ED}
+
+@media(max-width:800px){
+  .trainer-intro-card{padding:32px 20px;gap:28px}
+  .ti-highlights{grid-template-columns:1fr}
+  .ti-certs{grid-template-columns:1fr}
+  .ti-stats{flex-wrap:wrap}
+  .ti-stat{min-width:50%;border-bottom:1px solid var(--border)}
+  .ti-avatar{width:180px;height:180px}
+  .ti-photo,.ti-fallback{width:180px;height:180px}
+}
+
+/* ========= SYLLABUS PAGES ========= */
+.syl-hero{
+  position:relative;z-index:1;padding:88px 32px 36px;text-align:center;
+  border-bottom:1px solid var(--border)}
+.back-btn{
+  position:absolute;top:70px;left:28px;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;background:rgba(255,255,255,.06);
+  border:1px solid var(--border);border-radius:8px;
+  color:var(--muted);font-size:.8rem;cursor:pointer;
+  font-family:'Outfit',sans-serif;transition:all .2s}
+.back-btn:hover{color:var(--text);border-color:rgba(110,231,247,.3);background:rgba(110,231,247,.06)}
+.syl-hero-inner{display:inline-block}
+.syl-ico{font-size:2.8rem;display:block;margin-bottom:12px}
+.syl-hero h1{
+  font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3.5vw,2.8rem);
+  font-weight:800;letter-spacing:-1px;margin-bottom:8px;
+  background:linear-gradient(135deg,#fff,var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.syl-hero p{color:var(--muted);font-size:.88rem}
+.syl-main{max-width:1280px;margin:0 auto;padding:32px 20px 56px}
+.syl-section{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--surface)}
+.sec-hdr{padding:22px 28px;display:flex;align-items:center;gap:14px;color:#fff}
+.sec-hdr-ico{font-size:1.8rem}
+.sec-hdr-info h2{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:3px}
+.sec-hdr-info p{font-size:.8rem;opacity:.85}
+
+/* Table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+thead tr{background:var(--surface2);border-bottom:1px solid var(--border)}
+th{
+  padding:10px 13px;text-align:left;
+  font-family:'JetBrains Mono',monospace;font-size:.66rem;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+tbody tr{border-bottom:1px solid rgba(42,52,80,.4);transition:background .15s}
+tbody tr:hover{background:rgba(110,231,247,.03)}
+tbody tr:last-child{border-bottom:none}
+td{padding:10px 13px;vertical-align:top}
+.td-sno{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);width:42px}
+.td-topic{font-weight:500;color:#c8d3e8}
+.td-mod{min-width:140px}
+.mod-tag{
+  display:inline-block;padding:3px 9px;
+  background:rgba(110,231,247,.07);border:1px solid rgba(110,231,247,.12);
+  border-radius:20px;font-size:.7rem;color:var(--accent);white-space:nowrap}
+.sub-list{list-style:none;padding:0}
+.sub-list li{padding:1px 0 1px 12px;color:var(--muted);font-size:.78rem;line-height:1.5;position:relative}
+.sub-list li::before{content:"›";position:absolute;left:0;color:var(--accent);opacity:.6}
+
+/* Projects */
+.proj-grid{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.proj-card{
+  display:flex;gap:12px;align-items:flex-start;padding:14px 16px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;transition:all .2s}
+.proj-card:hover{border-color:rgba(240,147,251,.3);transform:translateY(-1px);box-shadow:0 5px 18px rgba(0,0,0,.2)}
+.proj-num{
+  flex-shrink:0;width:26px;height:26px;
+  background:linear-gradient(135deg,#f093fb,#f5576c);
+  border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:#fff}
+.proj-txt{font-size:.8rem;line-height:1.5;color:var(--muted)}
+
+/* Footer */
+footer{
+  position:relative;z-index:1;padding:28px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);flex-wrap:wrap;gap:10px}
+.foot-brand{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;
+  background:linear-gradient(90deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.foot-links{display:flex;gap:4px;list-style:none;flex-wrap:wrap}
+.foot-links button{
+  font-size:.77rem;color:var(--muted);background:none;border:none;
+  cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;
+  padding:5px 10px;border-radius:6px}
+.foot-links button:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.foot-copy{font-size:.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* Mobile */
+@media(max-width:700px){
+  .navbar{padding:11px 16px}
+  .nav-links{
+    display:none;position:fixed;top:52px;left:0;right:0;z-index:998;
+    flex-direction:column;gap:0;background:rgba(10,14,26,.98);
+    border-bottom:1px solid var(--border);padding:6px 0}
+  .nav-links.open{display:flex}
+  .nav-links button{padding:11px 20px;border-radius:0;width:100%;text-align:left}
+  .hamburger{display:flex}
+  .hero{padding:75px 16px 40px}
+  .home-section{padding:40px 16px}
+  .hr{margin:0 16px}
+  .syl-hero{padding:80px 16px 28px}
+  .back-btn{top:64px;left:16px}
+  .syl-main{padding:20px 10px 48px}
+  .proj-grid{grid-template-columns:1fr;padding:14px}
+  footer{padding:20px 16px;flex-direction:column;text-align:center;gap:14px}
+  .foot-links{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <button class="logo" onclick="showPage('home')">Multi Cloud DevOps with AI by Veera NareshIT</button>
+  <ul class="nav-links" id="navLinks">
+    <li><button onclick="showPage('home')" id="nb-home" class="nav-active">🏠 Home</button></li>
+    <li><button onclick="showPage('page-aws')" id="nb-aws">☁️ AWS</button></li>
+    <li><button onclick="showPage('page-azure')" id="nb-azure">🔷 Azure</button></li>
+    <li><button onclick="showPage('page-gcp')" id="nb-gcp">🌐 GCP</button></li>
+    <li><button onclick="showPage('page-devops')" id="nb-devops">⚙️ DevOps</button></li>
+    <li><button onclick="showPage('page-aiml')" id="nb-aiml">🤖 AI & ML</button></li>
+    <li><button onclick="showPage('page-projects')" class="nav-cta" id="nb-projects">🚀 Projects</button></li>
+  </ul>
+  <div class="hamburger" id="ham" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ======== HOME PAGE ======== -->
+<div class="page active" id="home">
+  <section class="hero">
+    <div class="hero-badge"><span class="dot"></span>Industry-Grade Program</div>
+    <h1>
+      <span class="l1">Multi Cloud DevOps</span>
+      <span class="l2">with AI</span>
+    </h1>
+
+    <!-- Trainer badge -->
+    <div class="trainer-badge">
+      <div class="trainer-avatar">V</div>
+      <div class="trainer-info">
+        <div class="trainer-name">Veera — NareshIT</div>
+        <div class="trainer-role">Senior DevOps &amp; Multi Cloud Trainer</div>
+      </div>
+    </div>
+
+    <p class="hero-sub">A complete, hands-on curriculum covering AWS, Azure, GCP, DevOps tools, AI/ML and 28 real-world projects — crafted and delivered by Veera | NareshIT.</p>
+    <div class="btn-row">
+      <button class="btn-p" onclick="showPage('page-aws')">📋 View Syllabus</button>
+      <button class="btn-s" onclick="showPage('page-projects')">🚀 Explore Projects</button>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-n">210+</div><div class="stat-l">Total Days</div></div>
+    <div class="stat-item"><div class="stat-n">4</div><div class="stat-l">Platforms</div></div>
+    <div class="stat-item"><div class="stat-n">28</div><div class="stat-l">Projects</div></div>
+    <div class="stat-item"><div class="stat-n">100+</div><div class="stat-l">Topics</div></div>
+    <div class="stat-item"><div class="stat-n">6</div><div class="stat-l">Modules</div></div>
+  </div>
+
+  <div class="home-section">
+    <p class="sec-label">// meet your trainer</p>
+    <h2 class="sec-title">About Veera</h2>
+    <p class="sec-sub">The mind, experience and passion behind this curriculum.</p>
+
+    <div class="trainer-intro-card">
+
+      <!-- PHOTO — perfectly centred -->
+      <div class="ti-photo-wrap">
+        <div class="ti-avatar">
+          <img src="veera.jpeg" alt="Veera" class="ti-photo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <span class="ti-fallback">V</span>
+          <div class="ti-avatar-ring"></div>
+        </div>
+        <h3 class="ti-name">Veera</h3>
+        <div class="ti-org-pill">NareshIT</div>
+        <div class="ti-role-line">Senior DevOps &amp; Multi Cloud Trainer</div>
+        <div class="ti-tags">
+          <span class="ti-tag">☁️ AWS</span>
+          <span class="ti-tag">🔷 Azure</span>
+          <span class="ti-tag">🌐 GCP</span>
+          <span class="ti-tag">⚙️ DevOps</span>
+          <span class="ti-tag">🤖 AI &amp; ML</span>
+          <span class="ti-tag">🐳 Docker</span>
+          <span class="ti-tag">☸️ Kubernetes</span>
+          <span class="ti-tag">🔧 Terraform</span>
+        </div>
+      </div>
+
+      <!-- BIO -->
+      <div class="ti-bio-wrap">
+        <p class="ti-bio">Veera is a highly accomplished <strong>Senior DevOps &amp; Multi-Cloud Trainer</strong> at NareshIT with over <strong>12 years of real-world industry experience</strong> across AWS, Azure and GCP. He has personally trained more than <strong>20,000+ students</strong>, guiding them from beginner level to roles at top MNCs and product companies worldwide.</p>
+        <p class="ti-bio">His teaching is rooted in the industry — every concept backed by real production experience. He has architected large-scale cloud infrastructures, led DevOps transformations for enterprises, and built CI/CD pipelines powering mission-critical applications. Complex topics like Kubernetes, Terraform and multi-cloud become second nature under his guidance.</p>
+      </div>
+
+      <!-- STATS -->
+      <div class="ti-stats">
+        <div class="ti-stat"><span class="ti-stat-n">14+</span><span class="ti-stat-l">Years Experience</span></div>
+        <div class="ti-stat"><span class="ti-stat-n">20K+</span><span class="ti-stat-l">Students Trained</span></div>
+        <div class="ti-stat"><span class="ti-stat-n">3</span><span class="ti-stat-l">Cloud Platforms</span></div>
+        <div class="ti-stat"><span class="ti-stat-n">28+</span><span class="ti-stat-l">Live Projects</span></div>
+        <div class="ti-stat"><span class="ti-stat-n">100%</span><span class="ti-stat-l">Practical Focus</span></div>
+      </div>
+
+      <!-- HIGHLIGHTS -->
+      <div class="ti-section-label">💡 Expertise</div>
+      <div class="ti-highlights">
+        <div class="ti-highlight"><span class="ti-hi-icon">🎯</span><div><strong>Project-Based Learning</strong><small>Every module built around real-world deployments, not just theory.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">🏭</span><div><strong>Enterprise Cloud Architect</strong><small>Production-grade infrastructure design on AWS, Azure and GCP.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">☸️</span><div><strong>Kubernetes &amp; Container Expert</strong><small>Docker, EKS, AKS, GKE, Helm, ArgoCD and GitOps workflows.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">🔧</span><div><strong>Infrastructure as Code Master</strong><small>Terraform, Ansible, OpenTofu — full automation from scratch.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">🤖</span><div><strong>AI &amp; ML for DevOps</strong><small>KubeGPT, GitHub Copilot, AIOps and LLM-powered pipelines.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">🔒</span><div><strong>Cloud Security Specialist</strong><small>IAM, SSO, VPC hardening, zero-trust and compliance architecture.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">📊</span><div><strong>Observability &amp; Monitoring</strong><small>Prometheus, Grafana, ELK Stack, CloudWatch — full-stack alerting.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">🚀</span><div><strong>Career Placement Record</strong><small>Engineers placed at Amazon, Microsoft, TCS, Infosys, Wipro &amp; startups.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">🎓</span><div><strong>NareshIT Lead Trainer</strong><small>Most sought-after cloud &amp; DevOps instructor at NareshIT.</small></div></div>
+        <div class="ti-highlight"><span class="ti-hi-icon">🌍</span><div><strong>Multi-Cloud Strategy</strong><small>Cost optimization, cloud-native migration and hybrid governance.</small></div></div>
+      </div>
+
+      <!-- CERTIFICATIONS -->
+      <div class="ti-section-label">🏅 Certifications</div>
+      <div class="ti-certs">
+
+        <div class="cert-card cert-aws">
+          <div class="cert-logo">
+            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
+              <text x="4" y="34" font-family="Arial Black,sans-serif" font-size="28" font-weight="900" fill="#FF9900">AWS</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">AWS Certified Solutions Architect</div>
+            <div class="cert-level">Professional Level</div>
+            <div class="cert-issuer">Amazon Web Services</div>
+          </div>
+          <div class="cert-badge" style="background:linear-gradient(135deg,#FF9900,#e67e00)">✓</div>
+        </div>
+
+        <div class="cert-card cert-azure">
+          <div class="cert-logo">
+            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
+              <text x="2" y="34" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#0089D6">AZURE</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Microsoft Certified: Azure DevOps Engineer</div>
+            <div class="cert-level">Expert Level</div>
+            <div class="cert-issuer">Microsoft Azure</div>
+          </div>
+          <div class="cert-badge" style="background:linear-gradient(135deg,#0089D6,#005a99)">✓</div>
+        </div>
+
+        <div class="cert-card cert-k8s">
+          <div class="cert-logo">
+            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
+              <text x="4" y="34" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" fill="#326CE5">CKA</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Certified Kubernetes Administrator</div>
+            <div class="cert-level">CKA — CNCF</div>
+            <div class="cert-issuer">Linux Foundation</div>
+          </div>
+          <div class="cert-badge" style="background:linear-gradient(135deg,#326CE5,#1a3fa0)">✓</div>
+        </div>
+
+        <div class="cert-card cert-tf">
+          <div class="cert-logo">
+            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
+              <text x="2" y="34" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#7B42BC">TERRAFORM</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">HashiCorp Certified: Terraform Associate</div>
+            <div class="cert-level">Associate Level</div>
+            <div class="cert-issuer">HashiCorp</div>
+          </div>
+          <div class="cert-badge" style="background:linear-gradient(135deg,#7B42BC,#4a2080)">✓</div>
+        </div>
+
+        <div class="cert-card cert-gcp">
+          <div class="cert-logo">
+            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
+              <text x="4" y="34" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" fill="#4285F4">GCP</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Google Cloud Professional DevOps Engineer</div>
+            <div class="cert-level">Professional Level</div>
+            <div class="cert-issuer">Google Cloud</div>
+          </div>
+          <div class="cert-badge" style="background:linear-gradient(135deg,#4285F4,#34A853)">✓</div>
+        </div>
+
+        <div class="cert-card cert-docker">
+          <div class="cert-logo">
+            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
+              <text x="2" y="34" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#2496ED">DOCKER</text>
+            </svg>
+          </div>
+          <div class="cert-info">
+            <div class="cert-name">Docker Certified Associate</div>
+            <div class="cert-level">Associate Level</div>
+            <div class="cert-issuer">Docker Inc.</div>
+          </div>
+          <div class="cert-badge" style="background:linear-gradient(135deg,#2496ED,#0d6ab5)">✓</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <div class="home-section">
+    <p class="sec-label">// curriculum overview</p>
+    <h2 class="sec-title">Choose Your Module</h2>
+    <p class="sec-sub">Click any card to open that module's complete syllabus — curated by Veera.</p>
+    <div class="cards-grid">
+      <div class="card c-aws" onclick="showPage('page-aws')">
+        <div class="card-top"><div class="card-glow"></div>
+          <span class="card-ico">☁️</span>
+          <div class="card-ttl">Amazon Web Services</div>
+          <p class="card-dsc">EC2, S3, VPC, RDS, Lambda, EKS, IAM, CloudFront, Route53 and 20+ more AWS services with real deployments.</p>
+        </div>
+        <div class="card-bot"><div class="card-tags"><span class="ctag">59 Days</span><span class="ctag">29 Topics</span></div><div class="card-arr">↗</div></div>
+      </div>
+      <div class="card c-azure" onclick="showPage('page-azure')">
+        <div class="card-top"><div class="card-glow"></div>
+          <span class="card-ico">🔷</span>
+          <div class="card-ttl">Microsoft Azure</div>
+          <p class="card-dsc">Azure VMs, VNET, AKS, Azure DevOps, Blob Storage, Monitor and end-to-end CI/CD integration.</p>
+        </div>
+        <div class="card-bot"><div class="card-tags"><span class="ctag">42 Days</span><span class="ctag">24 Topics</span></div><div class="card-arr">↗</div></div>
+      </div>
+      <div class="card c-gcp" onclick="showPage('page-gcp')">
+        <div class="card-top"><div class="card-glow"></div>
+          <span class="card-ico">🌐</span>
+          <div class="card-ttl">Google Cloud Platform</div>
+          <p class="card-dsc">Compute Engine, GKE, Cloud Storage, VPC networking, Cloud Run and GCP-native DevOps with GitLab CI/CD.</p>
+        </div>
+        <div class="card-bot"><div class="card-tags"><span class="ctag">38 Days</span><span class="ctag">22 Topics</span></div><div class="card-arr">↗</div></div>
+      </div>
+      <div class="card c-devops" onclick="showPage('page-devops')">
+        <div class="card-top"><div class="card-glow"></div>
+          <span class="card-ico">⚙️</span>
+          <div class="card-ttl">DevOps Tools & Practices</div>
+          <p class="card-dsc">Git, Docker, Kubernetes, Jenkins, Terraform, Ansible, Prometheus, Grafana, ArgoCD, Helm — full toolchain.</p>
+        </div>
+        <div class="card-bot"><div class="card-tags"><span class="ctag">71 Days</span><span class="ctag">34 Topics</span></div><div class="card-arr">↗</div></div>
+      </div>
+      <div class="card c-ai" onclick="showPage('page-aiml')">
+        <div class="card-top"><div class="card-glow"></div>
+          <span class="card-ico">🤖</span>
+          <div class="card-ttl">AI & ML for DevOps</div>
+          <p class="card-dsc">AIOps, LLM-based log analysis, GitHub Copilot, AI code generation and KubeGPT for Kubernetes.</p>
+        </div>
+        <div class="card-bot"><div class="card-tags"><span class="ctag">8 Modules</span><span class="ctag">Cutting Edge</span></div><div class="card-arr">↗</div></div>
+      </div>
+      <div class="card c-proj" onclick="showPage('page-projects')">
+        <div class="card-top"><div class="card-glow"></div>
+          <span class="card-ico">🚀</span>
+          <div class="card-ttl">Multi-Cloud Projects</div>
+          <p class="card-dsc">28 production-grade capstone projects across AWS, Azure & GCP — EKS, serverless, GitOps and more.</p>
+        </div>
+        <div class="card-bot"><div class="card-tags"><span class="ctag">28 Projects</span><span class="ctag">Production-Grade</span></div><div class="card-arr">↗</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <div class="home-section">
+    <p class="sec-label">// skills you'll gain</p>
+    <h2 class="sec-title">What You'll Walk Away With</h2>
+    <p class="sec-sub">Practical, in-demand skills top companies hire for.</p>
+    <div class="skills-grid">
+      <div class="skill-item"><div class="skill-ico">🏗️</div><div><h4>Cloud Architecture</h4><p>Scalable, HA designs across AWS, Azure and GCP.</p></div></div>
+      <div class="skill-item"><div class="skill-ico">🔄</div><div><h4>CI/CD Pipelines</h4><p>Jenkins, GitLab CI, GitHub Actions, ArgoCD.</p></div></div>
+      <div class="skill-item"><div class="skill-ico">🐳</div><div><h4>Containers & K8s</h4><p>Docker + Kubernetes on EKS, AKS, GKE.</p></div></div>
+      <div class="skill-item"><div class="skill-ico">🔧</div><div><h4>Infrastructure as Code</h4><p>Terraform, Ansible, OpenTofu multi-cloud.</p></div></div>
+      <div class="skill-item"><div class="skill-ico">📊</div><div><h4>Observability</h4><p>Monitoring, log aggregation, alerting, incident response.</p></div></div>
+      <div class="skill-item"><div class="skill-ico">🛡️</div><div><h4>Security & IAM</h4><p>IAM, SSO, VPC controls, encryption, compliance.</p></div></div>
+      <div class="skill-item"><div class="skill-ico">🤖</div><div><h4>AI-Powered DevOps</h4><p>Copilot, ChatGPT, KubeGPT for infra & pipelines.</p></div></div>
+      <div class="skill-item"><div class="skill-ico">🌍</div><div><h4>Multi-Cloud Strategy</h4><p>Manage workloads across providers consistently.</p></div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by Veera NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('page-aws')">☁️ AWS</button></li>
+      <li><button onclick="showPage('page-azure')">🔷 Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">🌐 GCP</button></li>
+      <li><button onclick="showPage('page-devops')">⚙️ DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">🤖 AI & ML</button></li>
+      <li><button onclick="showPage('page-projects')">🚀 Projects</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: Veera — NareshIT</div>
+  </footer>
+</div>
+
+
+<!-- ======== AMAZON WEB SERVICES PAGE ======== -->
+<div class="page" id="page-aws">
+  <div class="syl-hero ">
+    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <div class="syl-hero-inner">
+      <span class="syl-ico">☁️</span>
+      <h1>Amazon Web Services</h1>
+      <p>AWS Complete Syllabus (59 Days)</p>
+    </div>
+  </div>
+  <div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#FF9900,#e67e00)">
+        <div class="sec-hdr-ico">☁️</div>
+        <div class="sec-hdr-info"><h2>Amazon Web Services Syllabus</h2><p>AWS Complete Syllabus (59 Days)</p></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>S.No</th><th>Module</th><th>Topic</th><th>Sub-Topics</th></tr></thead>
+          <tbody><tr>
+<td class="td-sno">1</td>
+<td class="td-mod"><span class="mod-tag">Cloud Fundamentals</span></td>
+<td class="td-topic">Introduction to Cloud Computing</td>
+<td class="td-sub"><ul class="sub-list"><li>Why Cloud Computing?</li><li>Benefits of Cloud Computing</li><li>Types of Cloud Computing</li><li>Cloud Service Models</li><li>Scaling in Cloud Computing</li><li>Cloud Computing Issues</li><li>Security in the Cloud</li><li>Cloud Costing Models</li></ul></td>
+</tr><tr>
+<td class="td-sno">2</td>
+<td class="td-mod"><span class="mod-tag">Cloud Fundamentals</span></td>
+<td class="td-topic">Virtualization</td>
+<td class="td-sub"><ul class="sub-list"><li>What is Virtualization?</li><li>Virtualization and Cloud Computing</li><li>Types of Virtualizations</li><li>Virtualization Terminologies</li><li>Hypervisor Concepts</li><li>Benefits</li><li>Vendors</li></ul></td>
+</tr><tr>
+<td class="td-sno">3</td>
+<td class="td-mod"><span class="mod-tag">Linux Basics</span></td>
+<td class="td-topic">Linux</td>
+<td class="td-sub"><ul class="sub-list"><li>All-Important Linux Commands</li><li>The Linux Filesystem</li><li>File Permissions</li><li>Process Management</li><li>User Account Management</li><li>Software Management</li><li>Backup and  Restore management</li><li>systemd and monitoring management</li><li>storage management</li><li>Networking in Linux</li></ul></td>
+</tr><tr>
+<td class="td-sno">4</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">EC2</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview</li><li>Instance Launch (Windows and Linux OS)</li></ul></td>
+</tr><tr>
+<td class="td-sno">5</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">EC2 Instance Management</td>
+<td class="td-sub"><ul class="sub-list"><li>Instance Types</li><li>Key Pair Management</li><li>Security Groups & Firewalls</li><li>Ec2 conncet methods</li><li>ec2 securirty group managemet</li><li>creation of ami and launchtemplate</li><li>elastic ip </li><li>Storage and Snapshots</li><li>User Data and Metadata</li></ul></td>
+</tr><tr>
+<td class="td-sno">6</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Elastic Load Balancing (ELB)</td>
+<td class="td-sub"><ul class="sub-list"><li>Load Balancers introduction</li><li>Application loadbalancer usage and creation   (ALB)</li><li>Network loadbalancer usage and creation   (NLB)</li><li>Path based routing technologies of alb</li><li>ALB and NLB target groups</li><li>Alb and Nlb loadbalancer integration</li></ul></td>
+</tr><tr>
+<td class="td-sno">7</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Billing and Monitoring</td>
+<td class="td-sub"><ul class="sub-list"><li>Billing and Monitoring</li><li>Alarms</li></ul></td>
+</tr><tr>
+<td class="td-sno">8</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Auto Scaling</td>
+<td class="td-sub"><ul class="sub-list"><li>Auto Scaling</li><li>Scaling Types and Policies</li><li>Target tracking policy</li><li>step and schuduling scalling</li></ul></td>
+</tr><tr>
+<td class="td-sno">9</td>
+<td class="td-mod"><span class="mod-tag">Storage Services</span></td>
+<td class="td-topic">EBS/EFS</td>
+<td class="td-sub"><ul class="sub-list"><li>EBS (Elastic Block Storage)</li><li>EFS (Elastic File Storage)</li></ul></td>
+</tr><tr>
+<td class="td-sno">10</td>
+<td class="td-mod"><span class="mod-tag">Networking</span></td>
+<td class="td-topic">VPC</td>
+<td class="td-sub"><ul class="sub-list"><li>Networking Basics</li><li>Public IPs & Private IPs</li><li>CIDR Range</li><li>Subnet Calculations</li><li>public subnet and private subnets</li><li>internet gateway and nat gateway</li><li>Creating Custom VPCs and Custom Subnets</li></ul></td>
+</tr><tr>
+<td class="td-sno">11</td>
+<td class="td-mod"><span class="mod-tag">Networking</span></td>
+<td class="td-topic">VPC Controls</td>
+<td class="td-sub"><ul class="sub-list"><li>Network ACLs</li><li>vpc peering same  region and crorss region and different account peering</li><li>Vpc Endpoint</li><li>Transist gateway</li><li>vpc endpoint to connct private ec2</li><li>Route Tables & IGW</li></ul></td>
+</tr><tr>
+<td class="td-sno">12</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">S3</td>
+<td class="td-sub"><ul class="sub-list"><li>What is S3?</li><li>Storage Classes</li><li>Versioning</li><li>S3 Bucket ACL and Bucket Permissions</li></ul></td>
+</tr><tr>
+<td class="td-sno">13</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">S3 Advanced</td>
+<td class="td-sub"><ul class="sub-list"><li>S3 Data Partition</li><li>Data Copying and Moving</li><li>Cross-Region/Same-Region Replication</li><li>Lifecycle Management</li><li>Security & Encryption</li><li>KMS (Key Management Service)</li><li>Static Web Hosting with S3</li><li>Events Configuration on S3 Buckets</li></ul></td>
+</tr><tr>
+<td class="td-sno">14</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">S3 Access</td>
+<td class="td-sub"><ul class="sub-list"><li>Enabling Cross-Account Access for S3</li></ul></td>
+</tr><tr>
+<td class="td-sno">15</td>
+<td class="td-mod"><span class="mod-tag">Identity & Access</span></td>
+<td class="td-topic">IAM</td>
+<td class="td-sub"><ul class="sub-list"><li>Root Account vs. IAM User</li><li>Multi-Factor Authentication for Users</li><li>IAM Password Policies</li><li>Keys Configuration and Different Access Approaches</li><li>User, Groups, and Role Concepts</li><li>AWS CLI and IAM Roles</li><li>IAM policies ,aws managed,custom,inline policies</li><li>Creating Customer-Managed Policies</li><li>Auditing User Activity</li></ul></td>
+</tr><tr>
+<td class="td-sno">16</td>
+<td class="td-mod"><span class="mod-tag">Databases</span></td>
+<td class="td-topic">RDS</td>
+<td class="td-sub"><ul class="sub-list"><li>Launching RDS Instances</li><li>Difference Between DB on EC2 and Managed RDS</li><li>RDS Proxy Configuration Process</li><li>ElastiCache Overview</li></ul></td>
+</tr><tr>
+<td class="td-sno">17</td>
+<td class="td-mod"><span class="mod-tag">Databases</span></td>
+<td class="td-topic">RDS Operations</td>
+<td class="td-sub"><ul class="sub-list"><li>Connection Process from RDS to EC2</li><li>Connection Process from RDS to Local Machine Using Workbench</li><li>Creating DB and Tables, Running Queries</li><li>Configuring Read Replicas with Masters and Accessing Tables</li></ul></td>
+</tr><tr>
+<td class="td-sno">18</td>
+<td class="td-mod"><span class="mod-tag">Databases & Serverless</span></td>
+<td class="td-topic">DynamoDB & API Gateway</td>
+<td class="td-sub"><ul class="sub-list"><li>DynamoDB Overview</li><li>DynamoDB Security Options</li><li>DynamoDB Integration to Lambda</li><li>Lambda and API Gateway</li><li>Project on Lambda, API Gateway, and DynamoDB Integration</li></ul></td>
+</tr><tr>
+<td class="td-sno">19</td>
+<td class="td-mod"><span class="mod-tag">Security Services</span></td>
+<td class="td-topic">Secrets & Keys</td>
+<td class="td-sub"><ul class="sub-list"><li>AWS Secrets Manager</li><li>Key Management Services</li></ul></td>
+</tr><tr>
+<td class="td-sno">20</td>
+<td class="td-mod"><span class="mod-tag">Monitoring</span></td>
+<td class="td-topic">CloudWatch</td>
+<td class="td-sub"><ul class="sub-list"><li>CloudWatch Overview</li></ul></td>
+</tr><tr>
+<td class="td-sno">21</td>
+<td class="td-mod"><span class="mod-tag">Monitoring</span></td>
+<td class="td-topic">CloudWatch Advanced</td>
+<td class="td-sub"><ul class="sub-list"><li>CloudWatch EventBridge</li><li>CloudWatch Alarms</li></ul></td>
+</tr><tr>
+<td class="td-sno">22</td>
+<td class="td-mod"><span class="mod-tag">Security Services</span></td>
+<td class="td-topic">AWS Security Tools</td>
+<td class="td-sub"><ul class="sub-list"><li>AWS Certificate Manager</li><li>AWS Inspector</li><li>AWS Trusted Advisor</li><li>AWS Global Accelerator</li><li>Content Delivery Networks / CloudFront</li><li>AWS Shield and WAF (Web Application Firewall)</li><li>CloudTrail</li><li>AWS Config</li><li>SNS</li></ul></td>
+</tr><tr>
+<td class="td-sno">23</td>
+<td class="td-mod"><span class="mod-tag">Serverless</span></td>
+<td class="td-topic">Lambda</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview of Lambda</li><li>Configuration with Different Services</li><li>Creation and Automation Using Lambda Boto3</li><li>General Configuration and Environment Setup in Lambda</li><li>Lambda Layers and Importance</li></ul></td>
+</tr><tr>
+<td class="td-sno">24</td>
+<td class="td-mod"><span class="mod-tag">Serverless</span></td>
+<td class="td-topic">Lambda Integrations</td>
+<td class="td-sub"><ul class="sub-list"><li>Lambda Limitations</li><li>Lambda to RDS Connection</li><li>Lambda to DynamoDB and API Gateway Connection</li></ul></td>
+</tr><tr>
+<td class="td-sno">25</td>
+<td class="td-mod"><span class="mod-tag">DNS & CDN</span></td>
+<td class="td-topic">Route 53</td>
+<td class="td-sub"><ul class="sub-list"><li>DNS Records Overview</li><li>Alias Configuration to ELB, Static Website Hosting, and CloudFront</li><li>Hosting Sample Website and Configuring Policies</li><li>Simple RP, Weighted RP</li><li>Failover RP, Geo Location RP, Latency-Based Routing</li><li>Cross-Region High Availability</li></ul></td>
+</tr><tr>
+<td class="td-sno">26</td>
+<td class="td-mod"><span class="mod-tag">DNS & CDN</span></td>
+<td class="td-topic">CloudFront</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview of CloudFront</li><li>CloudFront Distribution and Invalidations</li><li>Origins, Origin Groups</li><li>CloudFront Invalidations</li></ul></td>
+</tr><tr>
+<td class="td-sno">27</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform with AWS</td>
+<td class="td-sub"><ul class="sub-list"><li>Setting up the System for AWS</li><li>AWS Storage: The S3 Bucket and Random ID</li><li>AWS Storage: The Root Module</li><li>AWS Compute: AMI Data, Key Pair, and the File Function</li><li>AWS Compute: The EC2 Instance</li><li>AWS Compute: User Data and Template Files</li><li>AWS Compute: The Root Module</li></ul></td>
+</tr><tr>
+<td class="td-sno">28</td>
+<td class="td-mod"><span class="mod-tag">Scripting</span></td>
+<td class="td-topic">Python Boto3</td>
+<td class="td-sub"><ul class="sub-list"><li>Python Boto3 for AWS Automation</li></ul></td>
+</tr><tr>
+<td class="td-sno">29</td>
+<td class="td-mod"><span class="mod-tag">Migration</span></td>
+<td class="td-topic">DMS</td>
+<td class="td-sub"><ul class="sub-list"><li>introduction to database migration service</li><li>databse migration from ec2 to rds</li></ul></td>
+</tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by Veera NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('home')">🏠 Home</button></li>
+      <li><button onclick="showPage('page-aws')">AWS</button></li>
+      <li><button onclick="showPage('page-azure')">Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">GCP</button></li>
+      <li><button onclick="showPage('page-devops')">DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-projects')">Projects</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: Veera — NareshIT</div>
+  </footer>
+</div>
+<!-- ======== MICROSOFT AZURE PAGE ======== -->
+<div class="page" id="page-azure">
+  <div class="syl-hero ">
+    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <div class="syl-hero-inner">
+      <span class="syl-ico">🔷</span>
+      <h1>Microsoft Azure</h1>
+      <p>Azure with DevOps Integration (42 Days)</p>
+    </div>
+  </div>
+  <div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#0089D6,#005a99)">
+        <div class="sec-hdr-ico">🔷</div>
+        <div class="sec-hdr-info"><h2>Microsoft Azure Syllabus</h2><p>Azure with DevOps Integration (42 Days)</p></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>S.No</th><th>Module</th><th>Topic</th><th>Sub-Topics</th></tr></thead>
+          <tbody><tr>
+<td class="td-sno">1</td>
+<td class="td-mod"><span class="mod-tag">Cloud Fundamentals</span></td>
+<td class="td-topic">Introduction to Cloud Computing</td>
+<td class="td-sub"><ul class="sub-list"><li>Why Cloud Computing?</li><li>Benefits of Cloud Computing</li><li>Types of Cloud Computing</li><li>Cloud Service Models</li><li>Scaling in Cloud Computing</li><li>Cloud Computing Issues</li><li>Security in the Cloud</li><li>Cloud Costing Models</li></ul></td>
+</tr><tr>
+<td class="td-sno">2</td>
+<td class="td-mod"><span class="mod-tag">Cloud Fundamentals</span></td>
+<td class="td-topic">Virtualization</td>
+<td class="td-sub"><ul class="sub-list"><li>What is Virtualization?</li><li>Virtualization and Cloud Computing</li><li>Types of Virtualizations</li><li>Virtualization Terminologies</li><li>Hypervisor Concepts</li><li>Benefits</li><li>Vendors</li></ul></td>
+</tr><tr>
+<td class="td-sno">3</td>
+<td class="td-mod"><span class="mod-tag">Linux Basics</span></td>
+<td class="td-topic">Linux</td>
+<td class="td-sub"><ul class="sub-list"><li>All-Important Linux Commands</li><li>The Linux Filesystem</li><li>File Permissions</li><li>Process Management</li><li>User Account Management</li><li>Software Management</li><li>Networking in Linux</li></ul></td>
+</tr><tr>
+<td class="td-sno">4</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Azure VM</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview</li><li>Instance Launch (Windows and Linux OS)</li></ul></td>
+</tr><tr>
+<td class="td-sno">5</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Azure VM Instance Management</td>
+<td class="td-sub"><ul class="sub-list"><li>Instance Types</li><li>Key Pair Management</li><li>Security Groups & Firewalls</li><li>Storage and Snapshots</li><li>User Data and Metadata</li></ul></td>
+</tr><tr>
+<td class="td-sno">6</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Azure Load Balancer</td>
+<td class="td-sub"><ul class="sub-list"><li>Load Balancers</li></ul></td>
+</tr><tr>
+<td class="td-sno">7</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Billing and Monitoring</td>
+<td class="td-sub"><ul class="sub-list"><li>Billing and Monitoring</li><li>Alarms</li></ul></td>
+</tr><tr>
+<td class="td-sno">8</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Azure Auto Scaling</td>
+<td class="td-sub"><ul class="sub-list"><li>Auto Scaling</li><li>Scaling Types and Policies</li><li>Azure Auto-Scaling</li></ul></td>
+</tr><tr>
+<td class="td-sno">9</td>
+<td class="td-mod"><span class="mod-tag">Storage Services</span></td>
+<td class="td-topic">Azure Managed Disks/File Share</td>
+<td class="td-sub"><ul class="sub-list"><li>EBS Equivalent (Managed Disks)</li><li>EFS Equivalent (File Share)</li></ul></td>
+</tr><tr>
+<td class="td-sno">10</td>
+<td class="td-mod"><span class="mod-tag">Networking</span></td>
+<td class="td-topic">VNET</td>
+<td class="td-sub"><ul class="sub-list"><li>Networking Basics</li><li>Public IPs & Private IPs</li><li>CIDR Range</li><li>Subnet Calculations</li><li>Creating Custom VNETs and Custom Subnets</li></ul></td>
+</tr><tr>
+<td class="td-sno">11</td>
+<td class="td-mod"><span class="mod-tag">Networking</span></td>
+<td class="td-topic">VNET Controls</td>
+<td class="td-sub"><ul class="sub-list"><li>Network Security Groups (ACL Equivalent)</li><li>Route Tables & Gateways</li></ul></td>
+</tr><tr>
+<td class="td-sno">12</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">Blob Storage</td>
+<td class="td-sub"><ul class="sub-list"><li>What is Blob Storage?</li><li>Storage Classes (Tiers)</li><li>Versioning</li><li>Blob Container ACL and Permissions</li></ul></td>
+</tr><tr>
+<td class="td-sno">13</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">Blob Advanced</td>
+<td class="td-sub"><ul class="sub-list"><li>Data Partition</li><li>Data Copying and Moving</li><li>Cross-Region/Same-Region Replication</li><li>Lifecycle Management</li><li>Security & Encryption</li><li>Key Vault (KMS Equivalent)</li><li>Static Web Hosting with Blob Storage</li><li>Events Configuration on Blob Containers</li></ul></td>
+</tr><tr>
+<td class="td-sno">14</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">Blob Access</td>
+<td class="td-sub"><ul class="sub-list"><li>Enabling Cross-Account Access for Blob</li></ul></td>
+</tr><tr>
+<td class="td-sno">15</td>
+<td class="td-mod"><span class="mod-tag">Identity & Access</span></td>
+<td class="td-topic">Azure AD/Entra ID</td>
+<td class="td-sub"><ul class="sub-list"><li>Root Account vs. User</li><li>Multi-Factor Authentication for Users</li><li>Password Policies</li><li>Keys Configuration and Access Approaches</li><li>User, Groups, and Role Concepts</li><li>Creating Managed Policies</li><li>Auditing User Activity</li></ul></td>
+</tr><tr>
+<td class="td-sno">16</td>
+<td class="td-mod"><span class="mod-tag">Databases</span></td>
+<td class="td-topic">Azure SQL Database</td>
+<td class="td-sub"><ul class="sub-list"><li>Launching Instances</li><li>Difference Between DB on VM and Managed Azure SQL</li><li>Proxy Configuration Process</li><li>Azure Cache for Redis (ElastiCache Equivalent)</li></ul></td>
+</tr><tr>
+<td class="td-sno">17</td>
+<td class="td-mod"><span class="mod-tag">Databases</span></td>
+<td class="td-topic">Azure SQL Operations</td>
+<td class="td-sub"><ul class="sub-list"><li>Connection Process from Azure SQL to VM</li><li>Connection Process from Azure SQL to Local Machine Using Workbench</li><li>Creating DB and Tables, Running Queries</li><li>Configuring Read Replicas with Masters and Accessing Tables</li></ul></td>
+</tr><tr>
+<td class="td-sno">18</td>
+<td class="td-mod"><span class="mod-tag">Databases & Serverless</span></td>
+<td class="td-topic">Cosmos DB & API Management</td>
+<td class="td-sub"><ul class="sub-list"><li>Cosmos DB Overview</li><li>Cosmos DB Security Options</li><li>Cosmos DB Integration to Azure Functions</li><li>Azure Functions and API Management</li><li>Project on Azure Functions, API Management, and Cosmos DB Integration</li></ul></td>
+</tr><tr>
+<td class="td-sno">19</td>
+<td class="td-mod"><span class="mod-tag">Security Services</span></td>
+<td class="td-topic">Azure Security Tools</td>
+<td class="td-sub"><ul class="sub-list"><li>Azure Key Vault</li><li>Microsoft Defender for Cloud (Inspector Equivalent)</li><li>Azure Advisor (Trusted Advisor Equivalent)</li><li>Azure Front Door (Global Accelerator Equivalent)</li><li>Azure CDN</li><li>Azure DDoS Protection and WAF</li><li>Azure Monitor Logs</li><li>Azure Policy</li></ul></td>
+</tr><tr>
+<td class="td-sno">20</td>
+<td class="td-mod"><span class="mod-tag">Serverless</span></td>
+<td class="td-topic">Azure App Service/Functions</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview of Azure App Services</li><li>Configuration with Different Services</li><li>Creation and Automation Using Azure Functions</li><li>General Configuration and Environment Setup</li><li>Layers Equivalent and Importance</li></ul></td>
+</tr><tr>
+<td class="td-sno">21</td>
+<td class="td-mod"><span class="mod-tag">Serverless</span></td>
+<td class="td-topic">Azure App Service Integrations</td>
+<td class="td-sub"><ul class="sub-list"><li>Limitations</li><li>Azure Functions to Azure SQL Connection</li><li>Azure Functions to Cosmos DB and API Management Connection</li></ul></td>
+</tr><tr>
+<td class="td-sno">22</td>
+<td class="td-mod"><span class="mod-tag">CI/CD Pipelines</span></td>
+<td class="td-topic">Azure DevOps</td>
+<td class="td-sub"><ul class="sub-list"><li>Azure CI/CD</li></ul></td>
+</tr><tr>
+<td class="td-sno">23</td>
+<td class="td-mod"><span class="mod-tag">Orchestration</span></td>
+<td class="td-topic">AKS</td>
+<td class="td-sub"><ul class="sub-list"><li>AKS Overview and Deployment</li></ul></td>
+</tr><tr>
+<td class="td-sno">24</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform with Azure</td>
+<td class="td-sub"><ul class="sub-list"><li>Terraform with Azure</li></ul></td>
+</tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by Veera NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('home')">🏠 Home</button></li>
+      <li><button onclick="showPage('page-aws')">AWS</button></li>
+      <li><button onclick="showPage('page-azure')">Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">GCP</button></li>
+      <li><button onclick="showPage('page-devops')">DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-projects')">Projects</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: Veera — NareshIT</div>
+  </footer>
+</div>
+<!-- ======== GOOGLE CLOUD PLATFORM PAGE ======== -->
+<div class="page" id="page-gcp">
+  <div class="syl-hero ">
+    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <div class="syl-hero-inner">
+      <span class="syl-ico">🌐</span>
+      <h1>Google Cloud Platform</h1>
+      <p>GCP with DevOps Integration (38 Days)</p>
+    </div>
+  </div>
+  <div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#4285F4,#34A853)">
+        <div class="sec-hdr-ico">🌐</div>
+        <div class="sec-hdr-info"><h2>Google Cloud Platform Syllabus</h2><p>GCP with DevOps Integration (38 Days)</p></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>S.No</th><th>Module</th><th>Topic</th><th>Sub-Topics</th></tr></thead>
+          <tbody><tr>
+<td class="td-sno">1</td>
+<td class="td-mod"><span class="mod-tag">Cloud Fundamentals</span></td>
+<td class="td-topic">Introduction to Cloud Computing</td>
+<td class="td-sub"><ul class="sub-list"><li>Why Cloud Computing?</li><li>Benefits of Cloud Computing</li><li>Types of Cloud Computing</li><li>Cloud Service Models</li><li>Scaling in Cloud Computing</li><li>Cloud Computing Issues</li><li>Security in the Cloud</li><li>Cloud Costing Models</li></ul></td>
+</tr><tr>
+<td class="td-sno">2</td>
+<td class="td-mod"><span class="mod-tag">Cloud Fundamentals</span></td>
+<td class="td-topic">Virtualization</td>
+<td class="td-sub"><ul class="sub-list"><li>What is Virtualization?</li><li>Virtualization and Cloud Computing</li><li>Types of Virtualizations</li><li>Virtualization Terminologies</li><li>Hypervisor Concepts</li><li>Benefits</li><li>Vendors</li></ul></td>
+</tr><tr>
+<td class="td-sno">3</td>
+<td class="td-mod"><span class="mod-tag">Linux Basics</span></td>
+<td class="td-topic">Linux</td>
+<td class="td-sub"><ul class="sub-list"><li>All-Important Linux Commands</li><li>The Linux Filesystem</li><li>File Permissions</li><li>Process Management</li><li>User Account Management</li><li>Software Management</li><li>Networking in Linux</li></ul></td>
+</tr><tr>
+<td class="td-sno">4</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Compute Engine</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview</li><li>Instance Launch (Windows and Linux OS)</li></ul></td>
+</tr><tr>
+<td class="td-sno">5</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Compute Engine Instance Management</td>
+<td class="td-sub"><ul class="sub-list"><li>Instance Types</li><li>Key Pair Management</li><li>Firewall Rules (Security Groups Equivalent)</li><li>Storage and Snapshots</li><li>User Data and Metadata</li></ul></td>
+</tr><tr>
+<td class="td-sno">6</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Load Balancing</td>
+<td class="td-sub"><ul class="sub-list"><li>Load Balancers</li></ul></td>
+</tr><tr>
+<td class="td-sno">7</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Billing and Monitoring</td>
+<td class="td-sub"><ul class="sub-list"><li>Billing and Monitoring</li><li>Alarms</li></ul></td>
+</tr><tr>
+<td class="td-sno">8</td>
+<td class="td-mod"><span class="mod-tag">Compute Services</span></td>
+<td class="td-topic">Autoscaler</td>
+<td class="td-sub"><ul class="sub-list"><li>Auto Scaling</li><li>Scaling Types and Policies</li><li>GCP Auto-Scaling</li></ul></td>
+</tr><tr>
+<td class="td-sno">9</td>
+<td class="td-mod"><span class="mod-tag">Storage Services</span></td>
+<td class="td-topic">Persistent Disk/Cloud Filestore</td>
+<td class="td-sub"><ul class="sub-list"><li>EBS Equivalent (Persistent Disk)</li><li>EFS Equivalent (Cloud Filestore)</li></ul></td>
+</tr><tr>
+<td class="td-sno">10</td>
+<td class="td-mod"><span class="mod-tag">Networking</span></td>
+<td class="td-topic">VPC Network</td>
+<td class="td-sub"><ul class="sub-list"><li>Networking Basics</li><li>Public IPs & Private IPs</li><li>CIDR Range</li><li>Subnet Calculations</li><li>Creating Custom VPCs and Custom Subnets</li></ul></td>
+</tr><tr>
+<td class="td-sno">11</td>
+<td class="td-mod"><span class="mod-tag">Networking</span></td>
+<td class="td-topic">VPC Controls</td>
+<td class="td-sub"><ul class="sub-list"><li>Firewall Rules (ACL Equivalent)</li><li>Route Tables & Cloud Router</li></ul></td>
+</tr><tr>
+<td class="td-sno">12</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">Cloud Storage</td>
+<td class="td-sub"><ul class="sub-list"><li>What is Cloud Storage?</li><li>Storage Classes</li><li>Versioning</li><li>Bucket ACL and Permissions</li></ul></td>
+</tr><tr>
+<td class="td-sno">13</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">Cloud Storage Advanced</td>
+<td class="td-sub"><ul class="sub-list"><li>Data Partition</li><li>Data Copying and Moving</li><li>Cross-Region/Same-Region Replication</li><li>Lifecycle Management</li><li>Security & Encryption</li><li>Cloud KMS</li><li>Static Web Hosting with Cloud Storage</li><li>Events Configuration on Buckets</li></ul></td>
+</tr><tr>
+<td class="td-sno">14</td>
+<td class="td-mod"><span class="mod-tag">Object Storage</span></td>
+<td class="td-topic">Cloud Storage Access</td>
+<td class="td-sub"><ul class="sub-list"><li>Enabling Cross-Account Access</li></ul></td>
+</tr><tr>
+<td class="td-sno">15</td>
+<td class="td-mod"><span class="mod-tag">Identity & Access</span></td>
+<td class="td-topic">IAM</td>
+<td class="td-sub"><ul class="sub-list"><li>Root Account vs. IAM User</li><li>Multi-Factor Authentication for Users</li><li>IAM Password Policies</li><li>Keys Configuration and Different Access Approaches</li><li>User, Groups, and Role Concepts</li><li>Creating Customer-Managed Policies</li><li>Auditing User Activity</li></ul></td>
+</tr><tr>
+<td class="td-sno">16</td>
+<td class="td-mod"><span class="mod-tag">Databases</span></td>
+<td class="td-topic">Cloud SQL</td>
+<td class="td-sub"><ul class="sub-list"><li>Launching Instances</li><li>Difference Between DB on Compute Engine and Managed Cloud SQL</li><li>Proxy Configuration Process</li><li>Memorystore (ElastiCache Equivalent)</li></ul></td>
+</tr><tr>
+<td class="td-sno">17</td>
+<td class="td-mod"><span class="mod-tag">Databases</span></td>
+<td class="td-topic">Cloud SQL Operations</td>
+<td class="td-sub"><ul class="sub-list"><li>Connection Process from Cloud SQL to Compute Engine</li><li>Connection Process from Cloud SQL to Local Machine Using Workbench</li><li>Creating DB and Tables, Running Queries</li><li>Configuring Read Replicas with Masters and Accessing Tables</li></ul></td>
+</tr><tr>
+<td class="td-sno">18</td>
+<td class="td-mod"><span class="mod-tag">Databases & Serverless</span></td>
+<td class="td-topic">Firestore & API Gateway</td>
+<td class="td-sub"><ul class="sub-list"><li>Firestore Overview</li><li>Firestore Security Options</li><li>Firestore Integration to Cloud Functions</li><li>Cloud Functions and API Gateway</li><li>Project on Cloud Functions, API Gateway, and Firestore Integration</li></ul></td>
+</tr><tr>
+<td class="td-sno">19</td>
+<td class="td-mod"><span class="mod-tag">Security Services</span></td>
+<td class="td-topic">GCP Security Tools</td>
+<td class="td-sub"><ul class="sub-list"><li>Certificate Manager</li><li>Security Command Center (Inspector Equivalent)</li><li>Recommender (Trusted Advisor Equivalent)</li><li>Cloud Load Balancing (Global Equivalent)</li><li>Cloud CDN</li><li>Cloud Armor (WAF Equivalent)</li><li>Cloud Audit Logs</li><li>Organization Policy</li></ul></td>
+</tr><tr>
+<td class="td-sno">20</td>
+<td class="td-mod"><span class="mod-tag">Serverless</span></td>
+<td class="td-topic">Cloud Functions/App Engine</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview of Cloud Functions/App Engine</li><li>Configuration with Different Services</li><li>Creation and Automation Using Cloud Functions</li><li>General Configuration and Environment Setup</li><li>Layers Equivalent and Importance</li></ul></td>
+</tr><tr>
+<td class="td-sno">21</td>
+<td class="td-mod"><span class="mod-tag">Serverless</span></td>
+<td class="td-topic">Cloud Functions Integrations</td>
+<td class="td-sub"><ul class="sub-list"><li>Limitations</li><li>Cloud Functions to Cloud SQL Connection</li><li>Cloud Functions to Firestore and API Gateway Connection</li></ul></td>
+</tr><tr>
+<td class="td-sno">22</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform with GCP</td>
+<td class="td-sub"><ul class="sub-list"><li>Terraform with GCP</li></ul></td>
+</tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by Veera NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('home')">🏠 Home</button></li>
+      <li><button onclick="showPage('page-aws')">AWS</button></li>
+      <li><button onclick="showPage('page-azure')">Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">GCP</button></li>
+      <li><button onclick="showPage('page-devops')">DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-projects')">Projects</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: Veera — NareshIT</div>
+  </footer>
+</div>
+<!-- ======== DEVOPS TOOLS & PRACTICES PAGE ======== -->
+<div class="page" id="page-devops">
+  <div class="syl-hero ">
+    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <div class="syl-hero-inner">
+      <span class="syl-ico">⚙️</span>
+      <h1>DevOps Tools & Practices</h1>
+      <p>Complete DevOps Toolchain (71 Days)</p>
+    </div>
+  </div>
+  <div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#11998e,#38ef7d)">
+        <div class="sec-hdr-ico">⚙️</div>
+        <div class="sec-hdr-info"><h2>DevOps Tools & Practices Syllabus</h2><p>Complete DevOps Toolchain (71 Days)</p></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>S.No</th><th>Module</th><th>Topic</th><th>Sub-Topics</th></tr></thead>
+          <tbody><tr>
+<td class="td-sno">1</td>
+<td class="td-mod"><span class="mod-tag">DevOps Fundamentals</span></td>
+<td class="td-topic">Overview of DevOps</td>
+<td class="td-sub"><ul class="sub-list"><li>What is DevOps?</li><li>DevOps Market Trends</li><li>Shell Script</li><li>DevOps Engineer Skills</li><li>DevOps Delivery Pipeline</li><li>DevOps Ecosystem</li></ul></td>
+</tr><tr>
+<td class="td-sno">2</td>
+<td class="td-mod"><span class="mod-tag">Shell Scripting</span></td>
+<td class="td-topic">Introduction to Shell</td>
+<td class="td-sub"><ul class="sub-list"><li>Types of Shells</li><li>Variables</li><li>Types of Variables</li><li>Operators</li><li>Input Arguments</li></ul></td>
+</tr><tr>
+<td class="td-sno">3</td>
+<td class="td-mod"><span class="mod-tag">Web Servers</span></td>
+<td class="td-topic">Apache & Tomcat</td>
+<td class="td-sub"><ul class="sub-list"><li>Apache Webserver Installations</li><li>Apache Webserver Configuration</li><li>Tomcat Application Server: Installation, Configuration</li><li>Tomcat Manager</li><li>Application Management</li></ul></td>
+</tr><tr>
+<td class="td-sno">4</td>
+<td class="td-mod"><span class="mod-tag">Version Control</span></td>
+<td class="td-topic">Git Introduction</td>
+<td class="td-sub"><ul class="sub-list"><li>What is Git?</li><li>How Git Works</li><li>Features</li><li>Git Workflow: Working Directory</li><li>Staging</li></ul></td>
+</tr><tr>
+<td class="td-sno">5</td>
+<td class="td-mod"><span class="mod-tag">Version Control</span></td>
+<td class="td-topic">Git Repositories</td>
+<td class="td-sub"><ul class="sub-list"><li>Local Repository</li><li>Remote Repository</li></ul></td>
+</tr><tr>
+<td class="td-sno">6</td>
+<td class="td-mod"><span class="mod-tag">Version Control</span></td>
+<td class="td-topic">Git Setup</td>
+<td class="td-sub"><ul class="sub-list"><li>Installing Git</li><li>First-Time Git Setup</li><li>Getting a Git Repository</li></ul></td>
+</tr><tr>
+<td class="td-sno">7</td>
+<td class="td-mod"><span class="mod-tag">Version Control</span></td>
+<td class="td-topic">Git Commands</td>
+<td class="td-sub"><ul class="sub-list"><li>Working with Various Commands in Git</li><li>Recording Changes to the Repository</li><li>Viewing the Commit History</li><li>Undoing Things</li><li>Git Forking</li></ul></td>
+</tr><tr>
+<td class="td-sno">8</td>
+<td class="td-mod"><span class="mod-tag">Version Control</span></td>
+<td class="td-topic">Git Remotes</td>
+<td class="td-sub"><ul class="sub-list"><li>Working with Remotes: Showing Your Remotes</li><li>Adding Remote Repositories</li><li>Fetching and Pulling from Your Remotes</li><li>Pushing to Your Remotes</li><li>Inspecting a Remote</li><li>Removing and Renaming Remotes</li></ul></td>
+</tr><tr>
+<td class="td-sno">9</td>
+<td class="td-mod"><span class="mod-tag">Version Control</span></td>
+<td class="td-topic">Branching and Merging in Git</td>
+<td class="td-sub"><ul class="sub-list"><li>What a Branch Is</li><li>Basics in Branching and Merging</li><li>Branch Management in Git</li><li>Branching Workflows and Usage</li><li>Remote Branches: Create and Delete</li><li>Rebasing</li></ul></td>
+</tr><tr>
+<td class="td-sno">10</td>
+<td class="td-mod"><span class="mod-tag">Build Tools</span></td>
+<td class="td-topic">Maven</td>
+<td class="td-sub"><ul class="sub-list"><li>Maven Installation</li><li>Maven Build Requirements</li><li>Maven POM Builds (pom.xml)</li><li>Maven Build Lifecycle</li><li>Maven Local Repository (.m2)</li><li>Maven Global Repository</li><li>Group ID, Artifact ID, Snapshot</li><li>Maven Dependencies</li><li>Maven Plugins</li></ul></td>
+</tr><tr>
+<td class="td-sno">11</td>
+<td class="td-mod"><span class="mod-tag">Code Quality</span></td>
+<td class="td-topic">SonarQube</td>
+<td class="td-sub"><ul class="sub-list"><li>Overview</li><li>Installation & Configuration of SonarQube</li><li>Initiate Code Scan with SonarQube Server</li><li>SonarQube Dashboard</li><li>Sample Project to Check Code Scan</li><li>Maven Integration with SonarQube</li><li>Real-Time Use Cases on SonarQube</li></ul></td>
+</tr><tr>
+<td class="td-sno">12</td>
+<td class="td-mod"><span class="mod-tag">CI/CD</span></td>
+<td class="td-topic">Jenkins Introduction</td>
+<td class="td-sub"><ul class="sub-list"><li>Introduction to Jenkins</li><li>Continuous Integration with Jenkins</li><li>Configure Jenkins</li><li>Jenkins Management</li><li>Scheduling Build Jobs: POLL SCM</li><li>Build Periodically</li></ul></td>
+</tr><tr>
+<td class="td-sno">13</td>
+<td class="td-mod"><span class="mod-tag">CI/CD</span></td>
+<td class="td-topic">Jenkins Advanced</td>
+<td class="td-sub"><ul class="sub-list"><li>Jenkins Master & Slave Node Configuration</li><li>Jenkins Workspace Management</li><li>Securing Jenkins: Authentication</li></ul></td>
+</tr><tr>
+<td class="td-sno">14</td>
+<td class="td-mod"><span class="mod-tag">CI/CD</span></td>
+<td class="td-topic">Jenkins Security & Plugins</td>
+<td class="td-sub"><ul class="sub-list"><li>Authorization</li><li>Confidentiality</li><li>Creating Users</li><li>Installing Jenkins Plugins</li><li>SCM Plugin</li><li>Build and Test</li></ul></td>
+</tr><tr>
+<td class="td-sno">15</td>
+<td class="td-mod"><span class="mod-tag">CI/CD</span></td>
+<td class="td-topic">Jenkins Integrations</td>
+<td class="td-sub"><ul class="sub-list"><li>Configure Jenkins with Services/Tools:
+EC2, Lambda, S3, GitHub, Docker, JFrog,
+SonarQube, Kubernetes, Trivy, ArgoCD</li></ul></td>
+</tr><tr>
+<td class="td-sno">16</td>
+<td class="td-mod"><span class="mod-tag">CI/CD Pipelines</span></td>
+<td class="td-topic">GitLab CI/CD</td>
+<td class="td-sub"><ul class="sub-list"><li>GitLab CI/CD</li></ul></td>
+</tr><tr>
+<td class="td-sno">17</td>
+<td class="td-mod"><span class="mod-tag">CI/CD Pipelines</span></td>
+<td class="td-topic">GitHub Actions</td>
+<td class="td-sub"><ul class="sub-list"><li>GitHub Actions</li></ul></td>
+</tr><tr>
+<td class="td-sno">18</td>
+<td class="td-mod"><span class="mod-tag">Containerization</span></td>
+<td class="td-topic">Docker</td>
+<td class="td-sub"><ul class="sub-list"><li>Docker Introduction</li><li>What is Docker Image</li><li>How to Get Docker Image</li><li>Docker Installation</li><li>Working with Docker Containers</li><li>What is Container</li><li>Docker Engine</li><li>Creating Containers with an Image</li><li>Working with Images</li><li>Docker Command Line Interface</li><li>Docker Compose</li><li>Docker Hub</li><li>Docker networking</li><li>multi stage and single stage docker fies</li><li>Docker volume </li><li>full stack  applicationn deployment on docker compose</li></ul></td>
+</tr><tr>
+<td class="td-sno">19</td>
+<td class="td-mod"><span class="mod-tag">Artifact Management</span></td>
+<td class="td-topic">JFrog</td>
+<td class="td-sub"><ul class="sub-list"><li>JFrog Installation</li><li>Storing Artifacts into JFrog Repo</li><li>Push and Pull Steps</li></ul></td>
+</tr><tr>
+<td class="td-sno">20</td>
+<td class="td-mod"><span class="mod-tag">Orchestration</span></td>
+<td class="td-topic">Kubernetes</td>
+<td class="td-sub"><ul class="sub-list"><li>Revisiting Kubernetes</li><li>Cluster Architecture</li><li>Spinning up a Kubernetes Cluster on EC2 VMs</li><li>RBAC Process</li><li>Exploring Your Cluster</li><li>Understanding YAML</li></ul></td>
+</tr><tr>
+<td class="td-sno">21</td>
+<td class="td-mod"><span class="mod-tag">Orchestration</span></td>
+<td class="td-topic">Kubernetes Deployments</td>
+<td class="td-sub"><ul class="sub-list"><li>Creating a Deployment in Kubernetes Using YAML</li><li>Creating a Service in Kubernetes</li><li>Installing Kubernetes Dashboard</li><li>kubernetes service accounts</li><li>Pod autoscaler HPA</li><li>Cluster Autoscaler</li><li>Ingress controller</li><li>Kubernetes Probs</li><li>Deploying an App Using Dashboard</li><li>Using Rolling Updates in Kubernetes</li><li>Containers and Container Orchestration</li></ul></td>
+</tr><tr>
+<td class="td-sno">22</td>
+<td class="td-mod"><span class="mod-tag">Orchestration</span></td>
+<td class="td-topic">Kubernetes Advanced</td>
+<td class="td-sub"><ul class="sub-list"><li>Helm Charts</li><li>Schedulers</li><li>Metric Server Deployment</li><li>Kubernetes Volumes</li><li>EKS/AKS/GKE Overview</li><li>EFK Stack</li><li>Helm Install & Deploy Application Through Helm</li><li>K8s Logs View on EFK Stack</li></ul></td>
+</tr><tr>
+<td class="td-sno">23</td>
+<td class="td-mod"><span class="mod-tag">GitOps</span></td>
+<td class="td-topic">ArgoCD</td>
+<td class="td-sub"><ul class="sub-list"><li>Installation</li><li>Configurations</li><li>CD</li></ul></td>
+</tr><tr>
+<td class="td-sno">24</td>
+<td class="td-mod"><span class="mod-tag">Monitoring</span></td>
+<td class="td-topic">Continuous Monitoring with Grafana</td>
+<td class="td-sub"><ul class="sub-list"><li>Introduction to Continuous Monitoring</li><li>Introduction to Grafana</li><li>Installing Grafana</li><li>Grafana Prometheus and Objects</li><li>Grafana Prometheus Configuration to Kubernetes</li></ul></td>
+</tr><tr>
+<td class="td-sno">25</td>
+<td class="td-mod"><span class="mod-tag">Configuration Management</span></td>
+<td class="td-topic">Ansible Introduction</td>
+<td class="td-sub"><ul class="sub-list"><li>Introduction to Ansible</li><li>Ansible Server Configuration</li><li>Infrastructure Management</li><li>SSH Connection in Ansible Master</li></ul></td>
+</tr><tr>
+<td class="td-sno">26</td>
+<td class="td-mod"><span class="mod-tag">Configuration Management</span></td>
+<td class="td-topic">Ansible Inventory & Commands</td>
+<td class="td-sub"><ul class="sub-list"><li>YAML Scripts</li><li>Host Inventory: Hosts and Groups</li><li>Host Variables</li><li>Group Variables</li><li>Host and Group Specific Data</li><li>Ad-hoc Commands</li></ul></td>
+</tr><tr>
+<td class="td-sno">27</td>
+<td class="td-mod"><span class="mod-tag">Configuration Management</span></td>
+<td class="td-topic">Ansible Playbooks</td>
+<td class="td-sub"><ul class="sub-list"><li>Playbooks</li><li>Variables</li><li>Conditionals</li><li>Loops</li><li>Blocks</li><li>Handlers</li><li>Templates</li><li>Modules: Core Modules</li><li>Extra Modules</li><li>Ansible Roles</li></ul></td>
+</tr><tr>
+<td class="td-sno">28</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform Introduction</td>
+<td class="td-sub"><ul class="sub-list"><li>Introduction to Terraform</li><li>Infrastructure Automation</li><li>Install Terraform</li><li>Providers</li><li>Resources</li><li>Basic Syntax</li><li>Exercise: Your First Script (main.tf)</li></ul></td>
+</tr><tr>
+<td class="td-sno">29</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform Basics</td>
+<td class="td-sub"><ul class="sub-list"><li> terraform installation</li><li>Exploring Terraform Registry</li><li>terraform workflow commnds </li><li>custom network  cretion and ec2</li><li>Terraform Console and Output</li><li>Terraform Variables,outputs</li><li>ec2-user data</li><li>Lab Exercises:
+Breaking Down main.tf into variables.tf, output.tf</li></ul></td>
+</tr><tr>
+<td class="td-sno">30</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform Modules</td>
+<td class="td-sub"><ul class="sub-list"><li>Introduction to Modules</li><li>Module Repositories</li><li>First Basic Module</li><li>modules-terraform-registry</li><li>modules-git-registry</li><li>Lab Exercises: Modules – The Root Module</li></ul></td>
+</tr><tr>
+<td class="td-sno">31</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform State & Advanced</td>
+<td class="td-sub"><ul class="sub-list"><li>Terraform State: Remote State</li><li>Data Sources</li><li>lifecycle_rules</li><li>Conditionals</li><li>Terraform using rds,lambda,s3 and IAM creation and connection</li><li>provisioners</li><li>null  resources</li></ul></td>
+</tr><tr>
+<td class="td-sno">32</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">Terraform Troubleshooting & Best Practices</td>
+<td class="td-sub"><ul class="sub-list"><li>multi providers</li><li>multi-sg --rules-forloop</li><li>conditiones</li><li>locals</li><li>Lab: Testing with Docker</li><li>Best Practices in Writing Terraform Scripts</li><li>Terraform Workflow</li><li>Terraform Projects</li><li>Other HashiCorp Tools</li><li>eks with terraform</li><li>ecs and fargate with terraform</li><li>New Features of Terraform</li></ul></td>
+</tr><tr>
+<td class="td-sno">33</td>
+<td class="td-mod"><span class="mod-tag">Infrastructure as Code</span></td>
+<td class="td-topic">OpenTofu</td>
+<td class="td-sub"><ul class="sub-list"><li>OpenTofu Overview</li></ul></td>
+</tr><tr>
+<td class="td-sno">34</td>
+<td class="td-mod"><span class="mod-tag">Scripting</span></td>
+<td class="td-topic">Python for DevOps</td>
+<td class="td-sub"><ul class="sub-list"><li>Introduction to Python</li><li>Lists, Ranges & Tuples in Python</li><li>Input and Output in Python</li><li>Python Object Oriented</li><li>Python Regular Expressions</li><li>Python Necessity in DevOps</li></ul></td>
+</tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by Veera NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('home')">🏠 Home</button></li>
+      <li><button onclick="showPage('page-aws')">AWS</button></li>
+      <li><button onclick="showPage('page-azure')">Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">GCP</button></li>
+      <li><button onclick="showPage('page-devops')">DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-projects')">Projects</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: Veera — NareshIT</div>
+  </footer>
+</div>
+<!-- ======== AI & ML FOR DEVOPS PAGE ======== -->
+<div class="page" id="page-aiml">
+  <div class="syl-hero ">
+    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <div class="syl-hero-inner">
+      <span class="syl-ico">🤖</span>
+      <h1>AI & ML for DevOps</h1>
+      <p>Cutting-edge AI integration for DevOps</p>
+    </div>
+  </div>
+  <div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#667eea,#764ba2)">
+        <div class="sec-hdr-ico">🤖</div>
+        <div class="sec-hdr-info"><h2>AI & ML for DevOps Syllabus</h2><p>Cutting-edge AI integration for DevOps</p></div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>S.No</th><th>Module</th><th>Sub-Topics</th></tr></thead>
+          <tbody><tr>
+<td class="td-sno">1</td>
+<td class="td-topic">AI & ML for devops</td>
+<td class="td-sub"><ul class="sub-list"><li>what is AI ML use for devops  </li><li>Introduction of ai tools for devops</li></ul></td>
+</tr><tr>
+<td class="td-sno">2</td>
+<td class="td-topic">Types of Machine Learning</td>
+<td class="td-sub"><ul class="sub-list"><li>Supervised Learning</li><li>Unsupervised Learning</li><li>Reinforcement Learning</li></ul></td>
+</tr><tr>
+<td class="td-sno">3</td>
+<td class="td-topic">AIOps monitoring</td>
+<td class="td-sub"><ul class="sub-list"><li>Dynatrace (AI Davis)</li><li>New Relic AI</li><li>Splunk ITSI</li></ul></td>
+</tr><tr>
+<td class="td-sno">4</td>
+<td class="td-topic">AI for code Writing</td>
+<td class="td-sub"><ul class="sub-list"><li>Dockerfiles</li><li>Terraform scripts</li><li>Helm charts</li><li>Jenkins pipelines</li></ul></td>
+</tr><tr>
+<td class="td-sno">5</td>
+<td class="td-topic">AI Analysis</td>
+<td class="td-sub"><ul class="sub-list"><li>Log analysis using LLMs</li><li>Incident auto-resolution</li><li>Capacity prediction</li><li>Cost optimization (FinOps + AI)</li></ul></td>
+</tr><tr>
+<td class="td-sno">6</td>
+<td class="td-topic">AI Tools for DevOps</td>
+<td class="td-sub"><ul class="sub-list"><li>ChatGPT / GitHub Copilot</li><li>Azure Copilot</li><li>Open-source LLMs (Ollama, LangChain)</li></ul></td>
+</tr><tr>
+<td class="td-sno">7</td>
+<td class="td-topic">kubernetes Ai</td>
+<td class="td-sub"><ul class="sub-list"><li>Qube gpt</li><li>installation of qubeqpt</li><li>use cases of qubegpt</li><li>Qube gpt & open ai integration</li></ul></td>
+</tr><tr>
+<td class="td-sno">8</td>
+<td class="td-topic">Real-Time Projects</td>
+<td class="td-sub"><ul class="sub-list"><li>CI/CD pipeline with AI failure analysis</li><li>AI-based log monitoring system</li><li>Terraform infra + AI validation</li><li>Cloud cost optimization using AI</li><li>loan predecting system using ml model</li></ul></td>
+</tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by Veera NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('home')">🏠 Home</button></li>
+      <li><button onclick="showPage('page-aws')">AWS</button></li>
+      <li><button onclick="showPage('page-azure')">Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">GCP</button></li>
+      <li><button onclick="showPage('page-devops')">DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-projects')">Projects</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: Veera — NareshIT</div>
+  </footer>
+</div>
+<!-- ======== PROJECTS PAGE ======== -->
+<div class="page" id="page-projects">
+  <div class="syl-hero">
+    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <div class="syl-hero-inner">
+      <span class="syl-ico">🚀</span>
+      <h1>Multi-Cloud Projects</h1>
+      <p>28 production-grade real-world capstone projects</p>
+    </div>
+  </div>
+  <div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#f093fb,#f5576c)">
+        <div class="sec-hdr-ico">🚀</div>
+        <div class="sec-hdr-info"><h2>Multi-Cloud Projects</h2><p>28 production-grade hands-on projects</p></div>
+      </div>
+      <div class="proj-grid"><div class="proj-card">
+  <span class="proj-num">1</span>
+  <span class="proj-txt">Multi-Tier Full-Stack Node.js Application Deployed on AWS Using 20+ Services with High Availability, Scalability, Networking, Security, and Monitoring.</span>
+</div><div class="proj-card">
+  <span class="proj-num">2</span>
+  <span class="proj-txt">Cloud Deployment of a Scalable, Resilient Full-Stack Python Application on AWS EC2 with Disaster Recovery Strategy.</span>
+</div><div class="proj-card">
+  <span class="proj-num">3</span>
+  <span class="proj-txt">Cloud-Native Deployment of a Full-Stack Java Spring Boot Application on Azure with High Availability and Disaster Recovery Strategy</span>
+</div><div class="proj-card">
+  <span class="proj-num">4</span>
+  <span class="proj-txt">Cloud-Native Deployment of a Full-Stack Nodejs Application on GCP with High Availability, Scalability, Networking, Security.</span>
+</div><div class="proj-card">
+  <span class="proj-num">5</span>
+  <span class="proj-txt">Automated Database Migration from EC2-Hosted MySQL to Amazon RDS Using AWS Database Migration Service (DMS) with Minimal Downtime and High Availability</span>
+</div><div class="proj-card">
+  <span class="proj-num">6</span>
+  <span class="proj-txt">End-to-End Application Migration from On-Premises Infrastructure to AWS Cloud with High Availability, Scalability, and Security Best Practices</span>
+</div><div class="proj-card">
+  <span class="proj-num">7</span>
+  <span class="proj-txt">Optimized Static Web Hosting Architecture on AWS S3 with CDN and Custom Domain.</span>
+</div><div class="proj-card">
+  <span class="proj-num">8</span>
+  <span class="proj-txt">Implementing Automated Backup Strategies in AWS Cloud Using Serverless Lambda Functions</span>
+</div><div class="proj-card">
+  <span class="proj-num">9</span>
+  <span class="proj-txt">End-to-End CDN Optimization: Configuring CloudFront for Low Latency and Automating Cache Invalidation Using Lambda</span>
+</div><div class="proj-card">
+  <span class="proj-num">10</span>
+  <span class="proj-txt">Cloud-Native Full-Stack Application Deployment on AWS ECS Fargate with CI/CD, Auto Scaling, and Secure Networking</span>
+</div><div class="proj-card">
+  <span class="proj-num">11</span>
+  <span class="proj-txt">Unified Infrastructure Monitoring with Prometheus and Grafana: Centralized Dashboard for Multi-Server Observability</span>
+</div><div class="proj-card">
+  <span class="proj-num">12</span>
+  <span class="proj-txt">Centralized Logging with Amazon CloudWatch and Cost-Optimized Log Archival to S3 Using AWS Lambda serverless</span>
+</div><div class="proj-card">
+  <span class="proj-num">13</span>
+  <span class="proj-txt">End-to-End Automation of Multi-Tier AWS, Azure and GCP Cloud Infrastructure Using Terraform with Complete Networking, Security, and Deployment Layers</span>
+</div><div class="proj-card">
+  <span class="proj-num">14</span>
+  <span class="proj-txt">End-to-End Automation of Java Maven Application Deployment on Apache Tomcat Using CI/CD Practices</span>
+</div><div class="proj-card">
+  <span class="proj-num">15</span>
+  <span class="proj-txt">End-to-End Cloud-Native CI/CD Pipeline for Node.js Microservices with Jenkins and Kubernetes</span>
+</div><div class="proj-card">
+  <span class="proj-num">16</span>
+  <span class="proj-txt">End-to-End DevOps Automation for Node.js Microservices with GitLab CI/CD and Kubernetes (EKS)(Elastic Kubernetes Service)</span>
+</div><div class="proj-card">
+  <span class="proj-num">17</span>
+  <span class="proj-txt">End-to-End CI/CD Pipeline for Java Applications Using Azure DevOps, Docker, and Kubernetes AKS(Azure Kubernetes Service)</span>
+</div><div class="proj-card">
+  <span class="proj-num">18</span>
+  <span class="proj-txt">End-to-End CI/CD Pipeline (Gitlab CICD) for Java Applications Using Azure DevOps, Docker, and Kubernetes GKE(Google Kubernetes Service)</span>
+</div><div class="proj-card">
+  <span class="proj-num">19</span>
+  <span class="proj-txt">Full-Stack Microservices Application (python, java and nodejs) Deployment on AWS Using CI/CD, GitOps, Helm, and Centralized Monitoring with Prometheus, Grafana, and the EFK Stack</span>
+</div><div class="proj-card">
+  <span class="proj-num">20</span>
+  <span class="proj-txt">End-to-End Production-Grade EKS Cluster Deployment on AWS, Azure and GCP Using Terraform with High Availability, Scalability, and Secure Networking</span>
+</div><div class="proj-card">
+  <span class="proj-num">21</span>
+  <span class="proj-txt">Fully Managed Serverless Full-Stack Deployment Using AWS Services (Lambda, API Gateway, DynamoDB)</span>
+</div><div class="proj-card">
+  <span class="proj-num">22</span>
+  <span class="proj-txt">End-to-End Patch Management and Monitoring Configuration Using Ansible</span>
+</div><div class="proj-card">
+  <span class="proj-num">23</span>
+  <span class="proj-txt">Containerized Full-Stack Application Deployment Using Docker & Docker Compose</span>
+</div><div class="proj-card">
+  <span class="proj-num">24</span>
+  <span class="proj-txt">Centralized Application Log Monitoring and Visualization on Amazon EKS Using the ELK Stack (Elasticsearch, Logstash, Kibana) for Enhanced Observability</span>
+</div><div class="proj-card">
+  <span class="proj-num">25</span>
+  <span class="proj-txt">Scalable Multi-Application Deployment on EC2 Using ALB Path-Based Routing</span>
+</div><div class="proj-card">
+  <span class="proj-num">26</span>
+  <span class="proj-txt">Enterprise Identity and Access Management Using AWS SSO</span>
+</div><div class="proj-card">
+  <span class="proj-num">27</span>
+  <span class="proj-txt">End-to-End CI/CD for Microservices on Amazon EKS Using Argo CD and GitHub Actions</span>
+</div><div class="proj-card">
+  <span class="proj-num">28</span>
+  <span class="proj-txt">End-to-End Kubernetes Application Deployment Using Ingress Controllers for High Availability, Load Balancing, and Traffic Management</span>
+</div></div>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by Veera NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('home')">🏠 Home</button></li>
+      <li><button onclick="showPage('page-aws')">AWS</button></li>
+      <li><button onclick="showPage('page-azure')">Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">GCP</button></li>
+      <li><button onclick="showPage('page-devops')">DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: Veera — NareshIT</div>
+  </footer>
+</div>
+
+<script>
+const pageIds = ['home','page-aws','page-azure','page-gcp','page-devops','page-aiml','page-projects'];
+const navIds  = {'home':'nb-home','page-aws':'nb-aws','page-azure':'nb-azure','page-gcp':'nb-gcp','page-devops':'nb-devops','page-aiml':'nb-aiml','page-projects':'nb-projects'};
+
+function showPage(id) {
+  pageIds.forEach(pid => {
+    const el = document.getElementById(pid);
+    if (el) el.classList.remove('active');
+  });
+  const target = document.getElementById(id);
+  if (target) target.classList.add('active');
+  window.scrollTo(0, 0);
+
+  // nav highlight
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('nav-active'));
+  const nb = document.getElementById(navIds[id]);
+  if (nb) nb.classList.add('nav-active');
+
+  // close mobile menu
+  document.getElementById('navLinks').classList.remove('open');
+}
+</script>
+</body>
+</html>

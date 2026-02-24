@@ -98,7 +98,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
   background:rgba(17,24,39,.7);overflow-x:auto}
 .stat-item{
-  flex:1;min-width:120px;padding:20px 12px;text-align:center;
+  flex:1;min-width:100px;padding:20px 12px;text-align:center;
   border-right:1px solid var(--border);transition:background .2s}
 .stat-item:last-child{border-right:none}
 .stat-item:hover{background:rgba(110,231,247,.04)}
@@ -126,12 +126,44 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   border:1px solid rgba(255,153,0,.25);
   border-radius:40px;padding:8px 20px 8px 8px;
   margin-bottom:20px}
-.trainer-avatar{
-  width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,#FF9900,var(--purple));
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;font-weight:800;color:#fff;
-  font-family:'Syne',sans-serif;flex-shrink:0}
+.trainer-avatar {
+  width: 50px;
+  height: 50px; /* make it perfect circle */
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF9900, var(--purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  flex-shrink: 0;
+  position: relative;
+  cursor: pointer;
+
+  /* Glow */
+  box-shadow: 0 0 10px #FF9900, 0 0 20px var(--purple);
+
+  /* Smooth animation */
+  animation: glowPulse 2s infinite alternate ease-in-out;
+  transition: transform 0.3s ease;
+}
+
+/* Hover pop effect */
+.trainer-avatar:hover {
+  transform: scale(1.1);
+}
+
+/* Glow animation */
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 8px #FF9900, 0 0 15px var(--purple);
+  }
+  100% {
+    box-shadow: 0 0 18px #FF9900, 0 0 30px var(--purple);
+  }
+}
 .trainer-info{text-align:left}
 .trainer-name{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--text)}
 .trainer-role{font-size:.7rem;color:var(--muted)}
@@ -446,7 +478,7 @@ footer{
 <!-- ======== HOME PAGE ======== -->
 <div class="page active" id="home">
   <section class="hero">
-    <div class="hero-badge"><span class="dot"></span>Industry-Grade Program</div>
+    <div class="hero-badge"><span class="dot"></span>realtime-Scenario</div>
     <h1>
       <span class="l1">Multi Cloud DevOps</span>
       <span class="l2">with AI</span>
@@ -461,7 +493,7 @@ footer{
       </div>
     </div>
 
-    <p class="hero-sub">A complete, hands-on curriculum covering AWS, Azure, GCP, DevOps tools, AI/ML and 28 real-world projects — crafted and delivered by veera sir | NareshIT.</p>
+    <p class="hero-sub">A complete, hands-on curriculum covering AWS, Azure, GCP, DevOps tools, AI/ML and 30 real-world projects — crafted and delivered by veera sir | NareshIT.</p>
     <div class="btn-row">
       <button class="btn-p" onclick="showPage('page-aws')">📋 View Syllabus</button>
       <button class="btn-s" onclick="showPage('page-projects')">🚀 Explore Projects</button>
@@ -477,6 +509,7 @@ footer{
   </div>
 
   <div class="home-section">
+
     <p class="sec-label">// meet your trainer</p>
     <h2 class="sec-title">About veera</h2>
     <p class="sec-sub">The mind, experience and passion behind this curriculum.</p>
@@ -492,8 +525,24 @@ footer{
           <div class="ti-avatar-ring"></div>
         </div>
         <h3 class="ti-name">veera sir</h3>
-        <div class="ti-org-pill">NareshIT</div>
-        <div class="ti-role-line">Senior DevOps &amp; Multi Cloud Trainer</div>
+<div class="ti-org-pill">NareshIT</div>
+<div class="ti-role-line">Senior DevOps &amp; Multi Cloud Trainer</div>
+
+
+<div class="ti-social-badges" style="margin: 15px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+  <a href="https://github.com/CloudTechDevOps" target="_blank">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+</a>
+  <a href="http://veera.veeraopstech.online/" target="_blank">
+    <img src="https://img.shields.io/badge/Website-0A66C2?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Website">
+  </a>
+  <a href="https://medium.com/@veerababu.narni232" target="_blank">
+    <img src="https://img.shields.io/badge/Blogs-12100E?style=for-the-badge&logo=medium&logoColor=white" alt="Medium">
+  </a>
+  <a href="https://www.linkedin.com/in/veerababu-narni-b99b05256" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+</div>
         <div class="ti-tags">
           <span class="ti-tag">☁️ AWS</span>
           <span class="ti-tag">🔷 Azure</span>

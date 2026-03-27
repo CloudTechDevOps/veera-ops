@@ -30,6 +30,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:linear-gradient(rgba(255,255,255,.02)1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02)1px,transparent 1px);
   background-size:60px 60px}
+@keyframes drift{
+  0%{transform:translate3d(0,0,0)}
+  50%{transform:translate3d(-6px,8px,0)}
+  100%{transform:translate3d(0,0,0)}
+}
+.bg-grid{animation:drift 12s ease-in-out infinite}
 
 /* NAVBAR */
 .navbar{
@@ -60,6 +66,14 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   position:relative;z-index:1;min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:90px 20px 50px;max-width:100%;overflow:hidden}
+.hero{animation:heroRise .8s ease both}
+.hero > *{animation:heroFloat 8s ease-in-out infinite}
+.hero-badge{animation-delay:.2s}
+.hero h1{animation-delay:.3s}
+.hero-sub{animation-delay:.4s}
+.btn-row{animation-delay:.5s}
+@keyframes heroRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heroFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
   background:rgba(110,231,247,.08);border:1px solid rgba(110,231,247,.2);
@@ -72,11 +86,18 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   font-family:'Syne',sans-serif;
   font-size:clamp(2.2rem,6vw,5rem);
   font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:20px}
-.hero h1 .l1{display:block;color:#fff}
+.hero h1 .l1{
+  display:block;
+  background:linear-gradient(90deg,#00c6ff 0%,#7f7fd5 40%,#ffb347 70%,#ff5fa2 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-shadow:0 0 12px rgba(0,198,255,.28),0 0 24px rgba(127,127,213,.28);
+  filter:drop-shadow(0 0 6px rgba(255,179,71,.25))}
 .hero h1 .l2{
   display:block;
-  background:linear-gradient(90deg,#FF9900 0%,#f5576c 30%,var(--purple) 60%,var(--accent) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  background:linear-gradient(90deg,#FF9900 0%,#ff5fa2 35%,#7f7fd5 65%,#6ee7f7 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-shadow:0 0 14px rgba(255,95,162,.35),0 0 28px rgba(110,231,247,.35);
+  filter:drop-shadow(0 0 8px rgba(167,139,250,.35))}
 .hero-sub{font-size:.92rem;color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:36px}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
 .btn-p{
@@ -96,7 +117,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .stats-bar{
   position:relative;z-index:1;display:flex;
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  background:rgba(17,24,39,.7);overflow-x:auto}
+  background:rgba(17,24,39,.7);overflow-x:auto;
+  animation:sectionIn .8s ease both .1s}
+.stat-item{animation:statIn .6s ease both}
+.stat-item:nth-child(1){animation-delay:.1s}
+.stat-item:nth-child(2){animation-delay:.2s}
+.stat-item:nth-child(3){animation-delay:.3s}
+.stat-item:nth-child(4){animation-delay:.4s}
+.stat-item:nth-child(5){animation-delay:.5s}
+@keyframes statIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .stat-item{
   flex:1;min-width:100px;padding:20px 12px;text-align:center;
   border-right:1px solid var(--border);transition:background .2s}
@@ -110,12 +139,32 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 .stat-l{font-size:.68rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase}
 
 /* Course cards */
-.home-section{position:relative;z-index:1;padding:48px 24px;max-width:960px;margin:0 auto}
+.home-section{
+  position:relative;z-index:1;padding:48px 24px;max-width:960px;margin:0 auto;
+  animation:sectionIn .8s ease both}
+.home-section:nth-of-type(1){animation-delay:.15s}
+.home-section:nth-of-type(2){animation-delay:.25s}
+.home-section:nth-of-type(3){animation-delay:.35s}
+.home-section:nth-of-type(4){animation-delay:.45s}
+.home-section:nth-of-type(5){animation-delay:.55s}
 .sec-label{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
 .sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
 .sec-sub{color:var(--muted);font-size:.86rem;margin-bottom:36px;line-height:1.6}
 
 .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.cards-grid .card{animation:cardIn .7s ease both}
+.cards-grid .card:nth-child(1){animation-delay:.15s}
+.cards-grid .card:nth-child(2){animation-delay:.25s}
+.cards-grid .card:nth-child(3){animation-delay:.35s}
+.cards-grid .card:nth-child(4){animation-delay:.45s}
+.cards-grid .card:nth-child(5){animation-delay:.55s}
+.cards-grid .card:nth-child(6){animation-delay:.65s}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+@keyframes sectionIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
 @media(max-width:900px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.cards-grid{grid-template-columns:1fr}}
 
@@ -240,7 +289,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   box-shadow:0 0 0 5px #1a2235,0 0 0 7px #FF9900,0 20px 60px rgba(255,153,0,.35)}
 .ti-fallback{
   width:220px;height:220px;border-radius:50%;
-  background:linear-gradient(135deg,#FF9900 0%,#f5576c 40%,var(--purple) 100%);
+  background:linear-gradient(135deg,#30c108 0%,#18d140 40%,var(--purple) 100%);
   display:none;align-items:center;justify-content:center;
   font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;color:#fff;
   box-shadow:0 0 0 5px #1a2235,0 0 0 7px #FF9900,0 20px 60px rgba(255,153,0,.35)}
@@ -301,7 +350,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
   background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
   border-radius:12px;transition:all .2s}
 .ti-highlight:hover{background:rgba(110,231,247,.05);border-color:rgba(110,231,247,.18)}
-.ti-hi-icon{font-size:1.3rem;flex-shrink:0}
+.ti-hi-icon{font-size:1.7rem;flex-shrink:0}
 .ti-highlight strong{display:block;font-size:.84rem;color:var(--text);margin-bottom:4px;font-family:'Syne',sans-serif;font-weight:700}
 .ti-highlight small{font-size:.75rem;color:var(--muted);line-height:1.5}
 
@@ -351,6 +400,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-
 }
 
 /* ========= SYLLABUS PAGES ========= */
+.devops-ticker{position:relative;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(17,24,39,.7)}
+.devops-ticker .ticker-track{display:flex;gap:40px;white-space:nowrap;animation:ticker 18s linear infinite;padding:10px 0}
+.devops-ticker .ticker-item{font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:1px;color:var(--accent)}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
 .syl-hero{
   position:relative;z-index:1;padding:88px 32px 36px;text-align:center;
   border-bottom:1px solid var(--border)}
@@ -405,8 +459,41 @@ td{padding:10px 13px;vertical-align:top}
 .proj-card{
   display:flex;gap:12px;align-items:flex-start;padding:14px 16px;
   background:var(--surface2);border:1px solid var(--border);
-  border-radius:10px;transition:all .2s}
-.proj-card:hover{border-color:rgba(240,147,251,.3);transform:translateY(-1px);box-shadow:0 5px 18px rgba(0,0,0,.2)}
+  border-radius:12px;transition:all .25s}
+.proj-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(110,231,247,.35);
+  box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.proj-card:nth-child(1){background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(2){background:linear-gradient(135deg,rgba(240,147,251,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(3){background:linear-gradient(135deg,rgba(0,137,214,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(4){background:linear-gradient(135deg,rgba(66,133,244,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(5){background:linear-gradient(135deg,rgba(56,239,125,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(6){background:linear-gradient(135deg,rgba(245,87,108,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(7){background:linear-gradient(135deg,rgba(110,231,247,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(8){background:linear-gradient(135deg,rgba(167,139,250,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(9){background:linear-gradient(135deg,rgba(255,204,51,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(10){background:linear-gradient(135deg,rgba(0,198,255,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(11){background:linear-gradient(135deg,rgba(255,154,158,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(12){background:linear-gradient(135deg,rgba(162,255,206,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(13){background:linear-gradient(135deg,rgba(127,127,213,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(14){background:linear-gradient(135deg,rgba(255,182,193,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(15){background:linear-gradient(135deg,rgba(54,209,220,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(16){background:linear-gradient(135deg,rgba(255,94,98,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(17){background:linear-gradient(135deg,rgba(255,154,158,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(18){background:linear-gradient(135deg,rgba(0,210,255,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(19){background:linear-gradient(135deg,rgba(255,183,94,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(20){background:linear-gradient(135deg,rgba(76,175,80,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(21){background:linear-gradient(135deg,rgba(156,39,176,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(22){background:linear-gradient(135deg,rgba(255,87,34,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(23){background:linear-gradient(135deg,rgba(33,150,243,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(24){background:linear-gradient(135deg,rgba(103,58,183,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(25){background:linear-gradient(135deg,rgba(0,188,212,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(26){background:linear-gradient(135deg,rgba(255,235,59,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(27){background:linear-gradient(135deg,rgba(121,85,72,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(28){background:linear-gradient(135deg,rgba(63,81,181,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(29){background:linear-gradient(135deg,rgba(0,150,136,.12),rgba(17,24,39,.9))}
+.proj-card:nth-child(30){background:linear-gradient(135deg,rgba(233,30,99,.12),rgba(17,24,39,.9))}
 .proj-num{
   flex-shrink:0;width:26px;height:26px;
   background:linear-gradient(135deg,#f093fb,#f5576c);
@@ -414,6 +501,184 @@ td{padding:10px 13px;vertical-align:top}
   font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:600;color:#fff}
 .proj-txt{font-size:.8rem;line-height:1.5;color:var(--muted)}
 
+/* Reviews */
+.reviews-grid{
+  padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.review-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:14px;overflow:visible;transition:transform .25s ease, box-shadow .25s ease;
+  position:relative;z-index:0;isolation:isolate}
+.review-card:nth-child(1){--glow:#6ee7f7,#a78bfa,#6ee7f7;--glowSolid:#6ee7f7}
+.review-card:nth-child(2){--glow:#ffb347,#ff7a85,#ffb347;--glowSolid:#ff7a85}
+.review-card:nth-child(3){--glow:#7f7fd5,#86a8e7,#91eae4;--glowSolid:#86a8e7}
+.review-card:nth-child(4){--glow:#a1ffce,#faffd1,#a1ffce;--glowSolid:#a1ffce}
+.review-card:nth-child(5){--glow:#f093fb,#f5576c,#f093fb;--glowSolid:#f5576c}
+.review-card:nth-child(6){--glow:#43cea2,#185a9d,#43cea2;--glowSolid:#43cea2}
+.review-card:nth-child(7){--glow:#ff9966,#ff5e62,#ff9966;--glowSolid:#ff5e62}
+.review-card:nth-child(8){--glow:#36d1dc,#5b86e5,#36d1dc;--glowSolid:#5b86e5}
+.review-card:nth-child(9){--glow:#f7971e,#ffd200,#f7971e;--glowSolid:#f7971e}
+.review-card:nth-child(10){--glow:#00c6ff,#0072ff,#00c6ff;--glowSolid:#00c6ff}
+.review-card:nth-child(11){--glow:#c6ffdd,#fbd786,#c6ffdd;--glowSolid:#fbd786}
+.review-card:nth-child(12){--glow:#ffb88c,#de6262,#ffb88c;--glowSolid:#de6262}
+.review-card:nth-child(13){--glow:#654ea3,#eaafc8,#654ea3;--glowSolid:#eaafc8}
+.review-card:nth-child(14){--glow:#a8ff78,#78ffd6,#a8ff78;--glowSolid:#78ffd6}
+.review-card:nth-child(15){--glow:#f46b45,#eea849,#f46b45;--glowSolid:#eea849}
+.review-card:nth-child(16){--glow:#9d50bb,#6e48aa,#9d50bb;--glowSolid:#9d50bb}
+.review-card::before{
+  content:"";position:absolute;inset:-8px;border-radius:18px;z-index:-1;
+  background:linear-gradient(120deg,var(--glow));
+  background-size:300% 300%;opacity:0;filter:blur(14px);
+  transition:opacity .25s ease}
+.review-card > *{position:relative;z-index:2}
+.review-card:hover{
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:
+    0 16px 38px rgba(0,0,0,.4),
+    0 0 24px color-mix(in srgb, var(--glowSolid) 60%, transparent);
+  z-index:2}
+.review-card:hover::before{
+  opacity:1;animation:cardGlow 2.5s linear infinite}
+.review-img{
+  width:100%;height:auto;display:block;
+  object-fit:contain;background:#0b1020;border-radius:12px;
+  transition:transform .25s ease, box-shadow .25s ease}
+.review-card:hover .review-img{
+  transform:scale(1.12);
+  box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.reviews-grid .review-card{
+  transition:transform .5s ease, box-shadow .3s ease, opacity .4s ease}
+.reviews-grid .review-card:nth-child(1){transform:translateY(12px) rotate(-1deg)}
+.reviews-grid .review-card:nth-child(2){transform:translateY(-8px) rotate(1deg)}
+.reviews-grid .review-card:nth-child(3){transform:translateY(10px) rotate(.5deg)}
+.reviews-grid .review-card:nth-child(4){transform:translateY(-6px) rotate(-.5deg)}
+.reviews-grid:hover .review-card{
+  transform:translateY(0) rotate(0)}
+
+/* Reviews wow-motion */
+.reviews-section{position:relative}
+.reviews-section::after{
+  content:"";position:absolute;inset:14px;
+  border-radius:16px;pointer-events:none;
+  background:radial-gradient(60% 60% at 20% 0%,rgba(110,231,247,.08),transparent 60%),
+             radial-gradient(60% 60% at 80% 100%,rgba(167,139,250,.08),transparent 60%);
+  opacity:.6;filter:blur(18px);transition:opacity .6s ease}
+.reviews-section:hover::after{opacity:1}
+
+.reviews-section .review-card{
+  opacity:.92;
+  animation:reviewFloat 6s ease-in-out infinite}
+.reviews-section .review-card:nth-child(2){animation-delay:.6s}
+.reviews-section .review-card:nth-child(3){animation-delay:1.2s}
+.reviews-section .review-card:nth-child(4){animation-delay:1.8s}
+
+.reviews-section:hover .review-card{
+  opacity:1;
+  animation:reviewSnap .6s ease forwards}
+
+@keyframes reviewFloat{
+  0%,100%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-6px) rotate(.4deg)}
+}
+@keyframes reviewSnap{
+  0%{transform:translateY(8px) rotate(-.4deg)}
+  60%{transform:translateY(-2px) rotate(.2deg)}
+  100%{transform:translateY(0) rotate(0)}
+}
+@keyframes cardGlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.review-meta{display:none}
+
+.placement-grid{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.place-card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:14px;overflow:visible;display:flex;flex-direction:column;
+  position:relative;z-index:0;isolation:isolate;
+  transition:transform .25s ease, box-shadow .25s ease}
+.place-card:nth-child(1){--pglow:#6ee7f7,#a78bfa,#6ee7f7;--pglowSolid:#6ee7f7}
+.place-card:nth-child(2){--pglow:#ffb347,#ff7a85,#ffb347;--pglowSolid:#ff7a85}
+.place-card:nth-child(3){--pglow:#7f7fd5,#86a8e7,#91eae4;--pglowSolid:#86a8e7}
+.place-card:nth-child(4){--pglow:#a1ffce,#faffd1,#a1ffce;--pglowSolid:#a1ffce}
+.place-card:nth-child(5){--pglow:#f093fb,#f5576c,#f093fb;--pglowSolid:#f5576c}
+.place-card:nth-child(6){--pglow:#43cea2,#185a9d,#43cea2;--pglowSolid:#43cea2}
+.place-card:nth-child(7){--pglow:#ff9966,#ff5e62,#ff9966;--pglowSolid:#ff5e62}
+.place-card:nth-child(8){--pglow:#36d1dc,#5b86e5,#36d1dc;--pglowSolid:#5b86e5}
+.place-card:nth-child(9){--pglow:#f7971e,#ffd200,#f7971e;--pglowSolid:#f7971e}
+.place-card:nth-child(10){--pglow:#00c6ff,#0072ff,#00c6ff;--pglowSolid:#00c6ff}
+.place-card:nth-child(11){--pglow:#c6ffdd,#fbd786,#c6ffdd;--pglowSolid:#fbd786}
+.place-card:nth-child(12){--pglow:#ffb88c,#de6262,#ffb88c;--pglowSolid:#de6262}
+.place-card:nth-child(13){--pglow:#654ea3,#eaafc8,#654ea3;--pglowSolid:#eaafc8}
+.place-card:nth-child(14){--pglow:#a8ff78,#78ffd6,#a8ff78;--pglowSolid:#78ffd6}
+.place-card:nth-child(15){--pglow:#f46b45,#eea849,#f46b45;--pglowSolid:#eea849}
+.place-card:nth-child(16){--pglow:#9d50bb,#6e48aa,#9d50bb;--pglowSolid:#9d50bb}
+.place-card::before{
+  content:"";position:absolute;inset:-6px;border-radius:16px;z-index:-1;
+  background:linear-gradient(120deg,var(--pglow));
+  background-size:300% 300%;opacity:0;filter:blur(12px);
+  transition:opacity .25s ease}
+.place-card:hover{
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:
+    0 16px 38px rgba(0,0,0,.4),
+    0 0 24px color-mix(in srgb, var(--pglowSolid) 60%, transparent);
+  z-index:2}
+.place-card:hover::before{
+  opacity:1;animation:cardGlow 2.5s linear infinite}
+.place-card:hover .place-img{
+  transform:scale(1.08);
+  box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.place-media{
+  height:150px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(255,153,0,.18),rgba(110,231,247,.16));
+  color:#fff;font-family:'Syne',sans-serif;font-weight:800}
+.place-img{
+  width:100%;height:auto;display:block;object-fit:contain;
+  background:#0b1020;border-radius:12px;
+  transition:transform .25s ease, box-shadow .25s ease}
+.place-meta{padding:12px 14px}
+.place-name{font-weight:700;font-size:.85rem;margin-bottom:4px}
+.place-role{font-size:.74rem;color:var(--muted)}
+
+.banner-grid{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.banner-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.banner-img{width:100%;height:180px;object-fit:cover;display:block}
+
+.video-list{
+  list-style:none;padding:20px;margin:0;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.video-card{
+  position:relative;display:flex;flex-direction:column;gap:10px;
+  padding:14px;border-radius:16px;
+  background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease}
+.video-card:hover{transform:translateY(-4px);border-color:rgba(110,231,247,.4);box-shadow:0 16px 34px rgba(0,0,0,.35)}
+.video-thumb{
+  position:relative;border-radius:14px;overflow:hidden;height:150px;
+  background:linear-gradient(135deg,#0f172a,#1e293b)}
+.video-thumb::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(40% 40% at 30% 30%,rgba(110,231,247,.25),transparent 60%),
+             radial-gradient(40% 40% at 70% 70%,rgba(167,139,250,.25),transparent 60%)}
+.play-fab{
+  position:absolute;left:14px;bottom:14px;width:44px;height:44px;border-radius:14px;
+  background:rgba(110,231,247,.18);border:1px solid rgba(110,231,247,.45);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.video-duration{
+  position:absolute;right:12px;bottom:12px;
+  padding:4px 8px;border-radius:999px;font-size:.68rem;
+  background:rgba(0,0,0,.55);color:#fff;font-family:'JetBrains Mono',monospace}
+.video-info{display:flex;flex-direction:column;gap:4px}
+.video-title{font-size:.9rem;font-weight:700;color:#e8eefc}
+.video-sub{font-size:.74rem;color:var(--muted)}
+.video-link{color:inherit;text-decoration:none;display:block}
+
+@media(max-width:560px){
+  .review-img{width:100%;height:auto}
+}
 /* Footer */
 footer{
   position:relative;z-index:1;padding:28px 32px;
@@ -451,6 +716,25 @@ footer{
   footer{padding:20px 16px;flex-direction:column;text-align:center;gap:14px}
   .foot-links{justify-content:center}
 }
+
+/* Review Lightbox */
+.lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(8,12,20,.82);z-index:2000;padding:20px}
+.lightbox.open{display:flex}
+.lightbox-inner{position:relative;max-width:min(980px,92vw);max-height:88vh}
+.lightbox-img{width:100%;height:auto;max-height:88vh;border-radius:14px;display:block;object-fit:contain;background:#0b1020;box-shadow:0 25px 80px rgba(0,0,0,.55)}
+.lightbox-caption{margin-top:10px;text-align:center;color:var(--muted);font-size:.8rem}
+.lightbox-close{position:absolute;top:-12px;right:-12px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(17,24,39,.9);color:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.ti-org-pill.cta-review{
+  cursor:pointer;border:none;
+  background:linear-gradient(120deg,#ffb347,#ff5fa2,#7f7fd5,#6ee7f7);
+  background-size:300% 300%;
+  color:#0a0e1a;font-weight:700;
+  box-shadow:0 8px 24px rgba(255,95,162,.35);
+  animation:reviewPulse 1.6s ease-in-out infinite, reviewGlow 4s linear infinite;
+}
+.ti-org-pill.cta-review:hover{transform:translateY(-2px) scale(1.03)}
+@keyframes reviewPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes reviewGlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 </style>
 </head>
 <body>
@@ -468,6 +752,7 @@ footer{
     <li><button onclick="showPage('page-gcp')" id="nb-gcp">🌐 GCP</button></li>
     <li><button onclick="showPage('page-devops')" id="nb-devops">⚙️ DevOps</button></li>
     <li><button onclick="showPage('page-aiml')" id="nb-aiml">🤖 AI & ML</button></li>
+    <li><button onclick="showPage('page-reviews')" id="nb-reviews">🌟 Reviews</button></li>
     <li><button onclick="showPage('page-projects')" class="nav-cta" id="nb-projects">🚀 Projects</button></li>
   </ul>
   <div class="hamburger" id="ham" onclick="document.getElementById('navLinks').classList.toggle('open')">
@@ -478,7 +763,7 @@ footer{
 <!-- ======== HOME PAGE ======== -->
 <div class="page active" id="home">
   <section class="hero">
-    <div class="hero-badge"><span class="dot"></span>realtime-Scenario</div>
+    <div class="hero-badge"><span class="dot"></span>First introduced Multi-Cloud DevOps and AWS DevOps in Naresh IT</div>
     <h1>
       <span class="l1">Multi Cloud DevOps</span>
       <span class="l2">with AI</span>
@@ -497,10 +782,19 @@ footer{
     <div class="btn-row">
       <button class="btn-p" onclick="showPage('page-aws')">📋 View Syllabus</button>
       <button class="btn-s" onclick="showPage('page-projects')">🚀 Explore Projects</button>
+      <button class="ti-org-pill cta-review" type="button" onclick="showPage('page-reviews')">Reviews</button>
+
     </div>
   </section>
-
-  <div class="stats-bar">
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    
+  </div>
+</div><div class="stats-bar">
     <div class="stat-item"><div class="stat-n">180</div><div class="stat-l">Total Days</div></div>
     <div class="stat-item"><div class="stat-n">3</div><div class="stat-l">Platforms</div></div>
     <div class="stat-item"><div class="stat-n">30</div><div class="stat-l">Projects</div></div>
@@ -519,13 +813,15 @@ footer{
       <!-- PHOTO — perfectly centred -->
       <div class="ti-photo-wrap">
         <div class="ti-avatar">
-          <img src="veera.jpeg" alt="veera sir" class="ti-photo"
+          <img src="docs/veera.jpeg" alt="veera sir" class="ti-photo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <span class="ti-fallback">V</span>
           <div class="ti-avatar-ring"></div>
         </div>
         <h3 class="ti-name">veera sir</h3>
-<div class="ti-org-pill">NareshIT</div>
+<div class="ti-org-pill">First introduced Multi-Cloud DevOps and AWS DevOps in Naresh IT.</div>
+
+<button class="ti-org-pill cta-review" type="button" onclick="showPage('page-reviews')">Reviews</button>
 <div class="ti-role-line">Senior DevOps &amp; Multi Cloud Trainer</div>
 
 
@@ -711,7 +1007,7 @@ footer{
       </div>
       <div class="card c-devops" onclick="showPage('page-devops')">
         <div class="card-top"><div class="card-glow"></div>
-          <span class="card-ico">⚙️</span>
+          <span class="card-ico">🔄</span>
           <div class="card-ttl">DevOps Tools & Practices</div>
           <p class="card-dsc">Git, Docker, Kubernetes, Jenkins, Terraform, Ansible, Prometheus, Grafana, ArgoCD, Helm — full toolchain.</p>
         </div>
@@ -762,9 +1058,10 @@ footer{
       <li><button onclick="showPage('page-gcp')">🌐 GCP</button></li>
       <li><button onclick="showPage('page-devops')">⚙️ DevOps</button></li>
       <li><button onclick="showPage('page-aiml')">🤖 AI & ML</button></li>
+      <li><button onclick="showPage('page-reviews')">Reviews</button></li>
       <li><button onclick="showPage('page-projects')">🚀 Projects</button></li>
     </ul>
-    <div class="foot-copy">© 2025 · Trainer: veera sir — NareshIT</div>
+    <div class="foot-copy">© 2026 · Trainer: veera sir — NareshIT</div>
   </footer>
 </div>
 
@@ -776,14 +1073,22 @@ footer{
     <div class="syl-hero-inner">
       <span class="syl-ico">☁️</span>
       <h1>Amazon Web Services</h1>
-      <p>AWS Complete Syllabus (59 Days)</p>
+      <p>AWS Complete Syllabus</p>
     </div>
   </div>
-  <div class="syl-main">
-    <div class="syl-section">
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
+    <div class="syl-section reviews-section">
       <div class="sec-hdr" style="background:linear-gradient(135deg,#FF9900,#e67e00)">
         <div class="sec-hdr-ico">☁️</div>
-        <div class="sec-hdr-info"><h2>Amazon Web Services Syllabus</h2><p>AWS Complete Syllabus (59 Days)</p></div>
+        <div class="sec-hdr-info"><h2>Amazon Web Services Syllabus</h2><p>AWS Complete Syllabus</p></div>
       </div>
       <div class="tbl-wrap">
         <table>
@@ -947,6 +1252,7 @@ footer{
       <li><button onclick="showPage('page-gcp')">GCP</button></li>
       <li><button onclick="showPage('page-devops')">DevOps</button></li>
       <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-reviews')">Reviews</button></li>
       <li><button onclick="showPage('page-projects')">Projects</button></li>
     </ul>
     <div class="foot-copy">© 2025 · Trainer: veera sir — NareshIT</div>
@@ -959,14 +1265,22 @@ footer{
     <div class="syl-hero-inner">
       <span class="syl-ico">🔷</span>
       <h1>Microsoft Azure</h1>
-      <p>Azure with DevOps Integration (42 Days)</p>
+      <p>Azure Syllabus</p>
     </div>
   </div>
-  <div class="syl-main">
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
     <div class="syl-section">
       <div class="sec-hdr" style="background:linear-gradient(135deg,#0089D6,#005a99)">
         <div class="sec-hdr-ico">🔷</div>
-        <div class="sec-hdr-info"><h2>Microsoft Azure Syllabus</h2><p>Azure with DevOps Integration (42 Days)</p></div>
+        <div class="sec-hdr-info"><h2>Microsoft Azure Syllabus</h2><p>Azure with DevOps Integration </p></div>
       </div>
       <div class="tbl-wrap">
         <table>
@@ -1105,6 +1419,7 @@ footer{
       <li><button onclick="showPage('page-gcp')">GCP</button></li>
       <li><button onclick="showPage('page-devops')">DevOps</button></li>
       <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-reviews')">Reviews</button></li>
       <li><button onclick="showPage('page-projects')">Projects</button></li>
     </ul>
     <div class="foot-copy">© 2025 · Trainer: veera sir — NareshIT</div>
@@ -1117,14 +1432,22 @@ footer{
     <div class="syl-hero-inner">
       <span class="syl-ico">🌐</span>
       <h1>Google Cloud Platform</h1>
-      <p>GCP with DevOps Integration (38 Days)</p>
+      <p>GCP Syllabus</p>
     </div>
   </div>
-  <div class="syl-main">
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
     <div class="syl-section">
       <div class="sec-hdr" style="background:linear-gradient(135deg,#4285F4,#34A853)">
         <div class="sec-hdr-ico">🌐</div>
-        <div class="sec-hdr-info"><h2>Google Cloud Platform Syllabus</h2><p>GCP with DevOps Integration (38 Days)</p></div>
+        <div class="sec-hdr-info"><h2>Google Cloud Platform Syllabus</h2><p>GCP with DevOps Integration </p></div>
       </div>
       <div class="tbl-wrap">
         <table>
@@ -1253,6 +1576,7 @@ footer{
       <li><button onclick="showPage('page-gcp')">GCP</button></li>
       <li><button onclick="showPage('page-devops')">DevOps</button></li>
       <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-reviews')">Reviews</button></li>
       <li><button onclick="showPage('page-projects')">Projects</button></li>
     </ul>
     <div class="foot-copy">© 2025 · Trainer: veera sir — NareshIT</div>
@@ -1261,18 +1585,26 @@ footer{
 <!-- ======== DEVOPS TOOLS & PRACTICES PAGE ======== -->
 <div class="page" id="page-devops">
   <div class="syl-hero ">
-    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <button class="back-btn" onclick="showPage('home')"> Back to Home</button>
     <div class="syl-hero-inner">
-      <span class="syl-ico">⚙️</span>
+      <span class="syl-ico">🔄</span>
       <h1>DevOps Tools & Practices</h1>
-      <p>Complete DevOps Toolchain (71 Days)</p>
+      <p>Complete DevOps Toolchain</p>
     </div>
   </div>
-  <div class="syl-main">
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
     <div class="syl-section">
       <div class="sec-hdr" style="background:linear-gradient(135deg,#11998e,#38ef7d)">
         <div class="sec-hdr-ico">⚙️</div>
-        <div class="sec-hdr-info"><h2>DevOps Tools & Practices Syllabus</h2><p>Complete DevOps Toolchain (71 Days)</p></div>
+        <div class="sec-hdr-info"><h2>DevOps Tools & Practices Syllabus</h2><p>Complete DevOps Toolchain</p></div>
       </div>
       <div class="tbl-wrap">
         <table>
@@ -1464,6 +1796,7 @@ Breaking Down main.tf into variables.tf, output.tf</li></ul></td>
       <li><button onclick="showPage('page-gcp')">GCP</button></li>
       <li><button onclick="showPage('page-devops')">DevOps</button></li>
       <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-reviews')">Reviews</button></li>
       <li><button onclick="showPage('page-projects')">Projects</button></li>
     </ul>
     <div class="foot-copy">© 2025 · Trainer: veera sir — NareshIT</div>
@@ -1479,7 +1812,15 @@ Breaking Down main.tf into variables.tf, output.tf</li></ul></td>
       <p>Cutting-edge AI integration for DevOps</p>
     </div>
   </div>
-  <div class="syl-main">
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
     <div class="syl-section">
       <div class="sec-hdr" style="background:linear-gradient(135deg,#667eea,#764ba2)">
         <div class="sec-hdr-ico">🤖</div>
@@ -1534,7 +1875,251 @@ Breaking Down main.tf into variables.tf, output.tf</li></ul></td>
       <li><button onclick="showPage('page-gcp')">GCP</button></li>
       <li><button onclick="showPage('page-devops')">DevOps</button></li>
       <li><button onclick="showPage('page-aiml')">AI & ML</button></li>
+      <li><button onclick="showPage('page-reviews')">Reviews</button></li>
       <li><button onclick="showPage('page-projects')">Projects</button></li>
+    </ul>
+    <div class="foot-copy">© 2025 · Trainer: veera sir — NareshIT</div>
+  </footer>
+</div>
+<!-- ======== REVIEWS PAGE ======== -->
+<div class="page" id="page-reviews">
+  <div class="syl-hero">
+    <button class="back-btn" onclick="showPage('home')">← Back to Home</button>
+    <div class="syl-hero-inner">
+      <span class="syl-ico">🌟</span>
+      <h1>Student Reviews & Placements</h1>
+      <p>Real feedback, real career wins</p>
+    </div>
+  </div>
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#ec0404,#2b905f,#a7d30a)">
+        <div class="sec-hdr-ico">🎥</div>
+        <div class="sec-hdr-info"><h2>VEERA CLOUD </h2><p>Veera cloud platform introduction</p></div>
+      </div>
+      <div style="padding:20px">
+        <video controls muted style="width:100%;max-height:420px;border-radius:16px;border:1px solid var(--border);background:#0b1020">
+          <source src="docs/v1.MP4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#e34805,#01baef,#941b86)">
+        <div class="sec-hdr-ico">💬</div>
+        <div class="sec-hdr-info"><h2>Student Reviews</h2><p>⭐⭐⭐⭐⭐ </p></div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <img class="review-img" alt="Student review 1" src="docs/review1.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 2" src="docs/review2.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 3" src="docs/review3.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 4" src="docs/review4.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 1" src="docs/review5.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 2" src="docs/review6.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 3" src="docs/review7.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 4" src="docs/review8.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 1" src="docs/review9.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 3" src="docs/review11.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 4" src="docs/review12.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 1" src="docs/review13.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 2" src="docs/review14.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 3" src="docs/review15.png">
+        </div>
+        <div class="review-card">
+          <img class="review-img" alt="Student review 4" src="docs/review16.png">
+        </div>
+      </div>
+    </div>
+
+    <div class="syl-section" style="margin-top:16px">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#e01b06,#ffcc33,#91eae4)">
+        <div class="sec-hdr-ico">🎯</div>
+        <div class="sec-hdr-info"><h2>Placement Gallery</h2><p>Students who got placements</p></div>
+      </div>
+      <div class="placement-grid">
+        <div class="place-card"><img class="place-img" alt="Placement student 1" src="docs/p1.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 2" src="docs/p2.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 3" src="docs/p3.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 4" src="docs/p4.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 5" src="docs/p5.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 6" src="docs/p6.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 7" src="docs/p7.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 8" src="docs/p8.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 9" src="docs/p9.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 10" src="docs/p10.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 11" src="docs/p11.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 12" src="docs/p12.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 13" src="docs/p13.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 14" src="docs/p14.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 15" src="docs/p15.jpg"></div>
+        <div class="place-card"><img class="place-img" alt="Placement student 16" src="docs/p16.jpg"></div>
+      </div>
+    </div>
+
+    <!-- <div class="syl-section" style="margin-top:16px">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#1d2b64,#f8cdda)">
+        <div class="sec-hdr-ico">🏆</div>
+        <div class="sec-hdr-info"><h2>Placement Banners</h2><p>Sample banners for placed students</p></div>
+      </div>
+      <div class="banner-grid">
+        <div class="banner-card">
+          <img class="banner-img" alt="Placement banner 1" src="banner1.png">
+        </div>
+        <div class="banner-card">
+          <img class="banner-img" alt="Placement banner 2" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='400'><defs><linearGradient id='b2' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='%23f5576c'/><stop offset='100%' stop-color='%23f093fb'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23b2)'/><text x='50%25' y='52%25' text-anchor='middle' font-family='Syne,Arial' font-size='46' fill='%230a0e1a' font-weight='800'>Placement%20Banner%2002</text></svg>">
+        </div>
+        <div class="banner-card">
+          <img class="banner-img" alt="Placement banner 3" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='400'><defs><linearGradient id='b3' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='%23ffb347'/><stop offset='100%' stop-color='%23ffcc33'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23b3)'/><text x='50%25' y='52%25' text-anchor='middle' font-family='Syne,Arial' font-size='46' fill='%230a0e1a' font-weight='800'>Placement%20Banner%2003</text></svg>">
+        </div>
+      </div>
+    </div> -->
+
+    <div class="syl-section" style="margin-top:16px">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#c806a1,#dbb406,#91eae4)">
+        <div class="sec-hdr-ico">🎬</div>
+        <div class="sec-hdr-info"><h2>Students Feedback Videos</h2><p>Watch student feedback videos</p></div>
+      </div>
+      <ul class="video-list">
+  <li>
+    <a class="video-link" href="https://www.instagram.com/reel/DWYnUyHOTWo" target="_blank" rel="noopener">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-fab">&#9654;</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">DevOps Engineer � Sheikh Tahir</div>
+          <div class="video-sub">Student Review</div>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li>
+    <a class="video-link" href="https://www.instagram.com/reel/DWTgs_JgPxK" target="_blank" rel="noopener">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-fab">&#9654;</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Cloud Engineer HEPIN AMIPARA</div>
+          <div class="video-sub">Student Review</div>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li>
+    <a class="video-link" href="https://www.instagram.com/reel/DJTLXAvgBsS" target="_blank" rel="noopener">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-fab">&#9654;</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Support Engineer � Hemanth Kumar</div>
+          <div class="video-sub">Student Review</div>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li>
+    <a class="video-link" href="https://www.instagram.com/reel/DJBa0EJPJmX" target="_blank" rel="noopener">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-fab">&#9654;</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">DevOps Engineer � Hemanth</div>
+          <div class="video-sub">Student Review</div>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li>
+    <a class="video-link" href="https://www.instagram.com/reel/DIJUJdIAVHx" target="_blank" rel="noopener">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-fab">&#9654;</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">DevOps Engineer � Jai Swamy</div>
+          <div class="video-sub">Student Review</div>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li>
+    <a class="video-link" href="https://www.instagram.com/reel/DIJDa9fAKxH" target="_blank" rel="noopener">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-fab">&#9654;</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">DevOps Engineer � Keerthana</div>
+          <div class="video-sub">Student Review</div>
+        </div>
+      </div>
+    </a>
+  </li>
+  <li>
+    <a class="video-link" href="https://www.instagram.com/reel/DIECGPGg3Ez" target="_blank" rel="noopener">
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="play-fab">&#9654;</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">DevOps Engineer � Rajeev</div>
+          <div class="video-sub">Student Review</div>
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by veera sir NareshIT</div>
+    <ul class="foot-links">
+      <li><button onclick="showPage('home')">🏠 Home</button></li>
+      <li><button onclick="showPage('page-aws')">☁️ AWS</button></li>
+      <li><button onclick="showPage('page-azure')">🔷 Azure</button></li>
+      <li><button onclick="showPage('page-gcp')">🌐 GCP</button></li>
+      <li><button onclick="showPage('page-devops')">⚙️ DevOps</button></li>
+      <li><button onclick="showPage('page-aiml')">🤖 AI & ML</button></li>
+      <li><button onclick="showPage('page-reviews')">🌟 Reviews</button></li>
+      <li><button onclick="showPage('page-projects')">🚀 Projects</button></li>
     </ul>
     <div class="foot-copy">© 2025 · Trainer: veera sir — NareshIT</div>
   </footer>
@@ -1549,7 +2134,15 @@ Breaking Down main.tf into variables.tf, output.tf</li></ul></td>
       <p>30 production-grade real-world capstone projects</p>
     </div>
   </div>
-  <div class="syl-main">
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
     <div class="syl-section">
       <div class="sec-hdr" style="background:linear-gradient(135deg,#f093fb,#f5576c)">
         <div class="sec-hdr-ico">🚀</div>
@@ -1663,8 +2256,8 @@ Breaking Down main.tf into variables.tf, output.tf</li></ul></td>
 </div>
 
 <script>
-const pageIds = ['home','page-aws','page-azure','page-gcp','page-devops','page-aiml','page-projects'];
-const navIds  = {'home':'nb-home','page-aws':'nb-aws','page-azure':'nb-azure','page-gcp':'nb-gcp','page-devops':'nb-devops','page-aiml':'nb-aiml','page-projects':'nb-projects'};
+const pageIds = ['home','page-aws','page-azure','page-gcp','page-devops','page-aiml','page-reviews','page-projects'];
+const navIds  = {'home':'nb-home','page-aws':'nb-aws','page-azure':'nb-azure','page-gcp':'nb-gcp','page-devops':'nb-devops','page-aiml':'nb-aiml','page-reviews':'nb-reviews','page-projects':'nb-projects'};
 
 function showPage(id) {
   pageIds.forEach(pid => {
@@ -1684,5 +2277,32 @@ function showPage(id) {
   document.getElementById('navLinks').classList.remove('open');
 }
 </script>
+<div class="lightbox" id="reviewLightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="reviewLightboxClose">�</button>
+    <img class="lightbox-img" id="reviewLightboxImg" alt="Review image">
+    <div class="lightbox-caption" id="reviewLightboxCaption"></div>
+  </div>
+</div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+trigger:
+- main  # Or 'master' if that's your default branch
+
+variables:
+- group: acr-secrets-veera  # Contains ACR_USERNAME and ACR_PASSWORD
+- name: imageName
+  value: 'multicloudveera.azurecr.io/myapp'
+- name: tag
+  value: 'latest'
+- name: acrServiceConnection
+  value: 'acrconnect'  # Name of ACR service connection in DevOps
+- name: sshConnection
+  value: 'vmconnect'             # Name of SSH service connection
+
+pool:
+  #name: 'azureagent'  # Self-hosted agent pool
+  vmImage: 'ubuntu-latest'
+
+steps:
+# Step 1: Docker Build and Push
+- task: Docker@2
+  displayName: 'Build and Push Docker Image to ACR'
+  inputs:
+    containerRegistry: '$(acrServiceConnection)'
+    repository: 'myapp'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      $(tag)
+
+# Step 2: SSH into VM and Run Docker Image
+- task: SSH@0
+  displayName: 'Run Docker Image on Azure VM'
+  inputs:
+    sshEndpoint: '$(sshConnection)'
+    runOptions: 'commands'
+    commands: |
+      set +e  # Allow non-zero exit codes so warnings don't fail the task
+
+      echo "$(ACR_PASSWORD)" | docker login multicloudveera.azurecr.io -u "$(ACR_USERNAME)" --password-stdin 2>/dev/null
+      echo "Logged into ACR"
+
+      echo "Pulling image..."
+      docker pull multicloudveera.azurecr.io/myapp:latest
+
+      echo "Stopping old container..."
+      docker stop myapp 2>/dev/null || true
+      docker rm myapp 2>/dev/null || true
+
+      echo "Running container..."
+      docker run -d -p 80:80 --name myapp multicloudveera.azurecr.io/myapp:latest
+
+      echo "Deployment complete."
+
+
+

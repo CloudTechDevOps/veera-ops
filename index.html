@@ -958,6 +958,58 @@ img.inv{filter:invert(1) drop-shadow(0 4px 12px rgba(2,6,18,.7))!important}
   .orbit-chip{width:36px;height:36px;margin:-18px}
   .f-logo{width:44px;height:44px}
 }
+
+/* ===== V6 — certification BADGES like real cert badges ===== */
+.certx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.certx-card{position:relative;text-align:center;padding:26px 14px 20px;border-radius:var(--r-sm);overflow:hidden;
+  background:rgba(9,14,28,.7);border:1px solid var(--border);transition:all .3s cubic-bezier(.16,1,.3,1)}
+.certx-card::after{content:"";position:absolute;top:0;left:-80%;width:45%;height:100%;
+  background:linear-gradient(115deg,transparent,rgba(255,255,255,.14),transparent);transform:skewX(-20deg);transition:left .7s ease}
+.certx-card:hover::after{left:150%}
+.certx-card:hover{transform:translateY(-6px);border-color:var(--border2);
+  box-shadow:0 20px 50px rgba(2,6,18,.6),0 0 40px rgba(129,140,248,.14)}
+.certx-name{font-family:'Space Grotesk',sans-serif;font-size:.84rem;font-weight:700;letter-spacing:-.1px;line-height:1.3;margin-bottom:5px}
+.certx-level{font-size:.7rem;color:var(--cyan);font-weight:600;margin-bottom:2px}
+.certx-issuer{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--faint);letter-spacing:.6px}
+/* badge base */
+.bx{position:relative;width:126px;height:140px;margin:0 auto 16px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px;color:#fff;
+  filter:drop-shadow(0 10px 22px rgba(2,6,18,.65));transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.certx-card:hover .bx{transform:scale(1.09) rotate(-2deg)}
+.bx img{width:42px;height:42px;object-fit:contain;margin-bottom:3px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+.bx-t1{font-family:'JetBrains Mono',monospace;font-size:6.5px;letter-spacing:1.2px;text-transform:uppercase;opacity:.9}
+.bx-t2{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2px;line-height:1.15;padding:0 12px}
+.bx-t3{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:800;letter-spacing:1px}
+.bx-stars{color:#ffd76a;font-size:9px;letter-spacing:3px;text-shadow:0 0 8px rgba(255,215,106,.8)}
+.bx-strip{position:absolute;bottom:16px;left:14%;right:14%;padding:2.5px 0;border-radius:3px;
+  font-family:'JetBrains Mono',monospace;font-size:6px;letter-spacing:1.6px;
+  background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.28)}
+/* hexagon (AWS style) */
+.bx-hex{background:linear-gradient(160deg,var(--b2),var(--b1));
+  clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);filter:none;
+  box-shadow:inset 0 0 0 4px rgba(255,255,255,.85),inset 0 0 0 7px var(--b1)}
+/* circle (CNCF / GCP style) */
+.bx-circle{width:132px;height:132px;border-radius:50%;background:#fff;color:#0a1533;
+  border:6px solid var(--b1);box-shadow:0 0 0 3px #fff,0 0 26px color-mix(in srgb,var(--b1) 55%,transparent)}
+.bx-circle img{width:52px;height:52px}
+.bx-circle .bx-t2{color:var(--b1);font-size:8.5px;letter-spacing:1px}
+.bx-circle .bx-t3{color:var(--b1)}
+.bx-gold{border-color:var(--b1);background:radial-gradient(circle at 50% 32%,#fff 62%,#fff8e6)}
+.bx-gold .bx-t2,.bx-gold .bx-t3{color:#b06000}
+/* shield (Microsoft style) */
+.bx-shield{background:linear-gradient(180deg,var(--b1),var(--b2));
+  clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);
+  filter:none;box-shadow:inset 0 0 0 4px rgba(255,255,255,.9)}
+.bx-shield .bx-strip{bottom:34px}
+/* rectangle (Terraform / Docker style) */
+.bx-rect{width:140px;height:112px;border-radius:12px;margin-top:14px;margin-bottom:30px;
+  background:linear-gradient(180deg,var(--b1),color-mix(in srgb,var(--b1) 75%,#000));
+  border:1px solid rgba(255,255,255,.22);overflow:hidden}
+.bx-rect .bx-head{position:absolute;top:0;left:0;right:0;padding:4px 0;
+  background:var(--b2);font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px}
+.bx-rect img{margin-top:16px;width:36px;height:36px}
+@media (max-width:1024px){.certx-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.certx-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1097,93 +1149,56 @@ img.inv{filter:invert(1) drop-shadow(0 4px 12px rgba(2,6,18,.7))!important}
 
       <!-- CERTIFICATIONS -->
       <div class="ti-section-label">🏅 Certifications</div>
-      <div class="ti-certs">
-
-        <div class="cert-card cert-aws">
-          <div class="cert-logo">
-            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
-              <text x="4" y="34" font-family="Arial Black,sans-serif" font-size="28" font-weight="900" fill="#FF9900">AWS</text>
-            </svg>
-          </div>
-          <div class="cert-info">
-            <div class="cert-name">AWS Certified Solutions Architect</div>
-            <div class="cert-level">Professional Level</div>
-            <div class="cert-issuer">Amazon Web Services</div>
-          </div>
-          <div class="cert-badge" style="background:linear-gradient(135deg,#FF9900,#e67e00)">✓</div>
-        </div>
-
-        <div class="cert-card cert-azure">
-          <div class="cert-logo">
-            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
-              <text x="2" y="34" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#0089D6">AZURE</text>
-            </svg>
-          </div>
-          <div class="cert-info">
-            <div class="cert-name">Microsoft Certified: Azure DevOps Engineer</div>
-            <div class="cert-level">Expert Level</div>
-            <div class="cert-issuer">Microsoft Azure</div>
-          </div>
-          <div class="cert-badge" style="background:linear-gradient(135deg,#0089D6,#005a99)">✓</div>
-        </div>
-
-        <div class="cert-card cert-k8s">
-          <div class="cert-logo">
-            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
-              <text x="4" y="34" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" fill="#326CE5">CKA</text>
-            </svg>
-          </div>
-          <div class="cert-info">
-            <div class="cert-name">Certified Kubernetes Administrator</div>
-            <div class="cert-level">CKA — CNCF</div>
-            <div class="cert-issuer">Linux Foundation</div>
-          </div>
-          <div class="cert-badge" style="background:linear-gradient(135deg,#326CE5,#1a3fa0)">✓</div>
-        </div>
-
-        <div class="cert-card cert-tf">
-          <div class="cert-logo">
-            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
-              <text x="2" y="34" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#7B42BC">TERRAFORM</text>
-            </svg>
-          </div>
-          <div class="cert-info">
-            <div class="cert-name">HashiCorp Certified: Terraform Associate</div>
-            <div class="cert-level">Associate Level</div>
-            <div class="cert-issuer">HashiCorp</div>
-          </div>
-          <div class="cert-badge" style="background:linear-gradient(135deg,#7B42BC,#4a2080)">✓</div>
-        </div>
-
-        <div class="cert-card cert-gcp">
-          <div class="cert-logo">
-            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
-              <text x="4" y="34" font-family="Arial Black,sans-serif" font-size="26" font-weight="900" fill="#4285F4">GCP</text>
-            </svg>
-          </div>
-          <div class="cert-info">
-            <div class="cert-name">Google Cloud Professional DevOps Engineer</div>
-            <div class="cert-level">Professional Level</div>
-            <div class="cert-issuer">Google Cloud</div>
-          </div>
-          <div class="cert-badge" style="background:linear-gradient(135deg,#4285F4,#34A853)">✓</div>
-        </div>
-
-        <div class="cert-card cert-docker">
-          <div class="cert-logo">
-            <svg viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="64" height="38">
-              <text x="2" y="34" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#2496ED">DOCKER</text>
-            </svg>
-          </div>
-          <div class="cert-info">
-            <div class="cert-name">Docker Certified Associate</div>
-            <div class="cert-level">Associate Level</div>
-            <div class="cert-issuer">Docker Inc.</div>
-          </div>
-          <div class="cert-badge" style="background:linear-gradient(135deg,#2496ED,#0d6ab5)">✓</div>
-        </div>
-
-      </div>
+      <div class="certx-grid">
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="0">
+<div class="bx bx-hex" style="--b1:#0e7c86;--b2:#16a3b0"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjRjdBODBEIiBkPSJNMzguMDg5IDc3LjQ2NmwtMTEuNCA0Ljg5NiAxMC41NTkgNC41MTQgMTIuMjQxLTQuNTE0LTExLjQtNC44OTZ6bS0xNy4xMzggNi4xMmwtLjM4MiAyMi4wMzQgMTYuNjc5IDcuMzQ1VjkwLjA4OWwtMTYuMjk3LTYuNTAzem0zNC4yNzYgMGwtMTUuMDczIDUuNzM5VjExMC45bDE1LjA3My02LjEyMVY4My41ODZ6bTE3Ljk3OS02OC41NTFMNjEuNzMgMTkuOTMxbDEwLjYzNSA0LjUxNSAxMi4yNDEtNC41MTUtMTEuNC00Ljg5NnptLTE1LjkxNCA2LjUwM3YyMi4wMzRsMTQuMjMxIDQuMTMyLjQ1OS0yMC4wNDYtMTQuNjktNi4xMnptMzEuODI4IDEuMjI0TDc1LjY1NCAyOC41djIxLjY1MmwxMy40NjYtNi4xMjFWMjIuNzYyek0xOS4zMDYgNDYuMDQ3TDcuOTA3IDUwLjk0NGwxMC41NTggNC41MTQgMTIuMjQxLTQuNTE0LTExLjQtNC44OTd6TTIuMTY4IDUyLjE2OGwtLjM4MiAyMi4wMzQgMTYuNjc5IDcuMzQ1VjU4LjY3MUwyLjE2OCA1Mi4xNjh6bTM0LjI3NSAwbC0xNS4wNzEgNS43MzhWNzkuNDhsMTUuMDcxLTYuMTJWNTIuMTY4em0xOS41ODctNi45MzdsLTExLjQgNC44OTcgMTAuNTU4IDQuNTE0IDEyLjI0MS00LjUxNC0xMS4zOTktNC44OTd6bS0xNy4xMzcgNi4xMjFsLS4zODMgMjIuMDM1IDE2LjY3OSA3LjM0NVY1Ny44NTVsLTE2LjI5Ni02LjUwM3ptMzQuMjc1IDBMNTguMDk2IDU3LjA5djIxLjU3NmwxNS4wNzItNi4xMjFWNTEuMzUyem0zNS45MDgtMzYuMzE3bC0xMS4zOTkgNC44OTYgMTAuNTU5IDQuNTE1IDEyLjI0MS00LjUxNS0xMS40MDEtNC44OTZ6bS0xNy4xMzcgNi4xMjFsLS4zODIgMjIuMDM0IDE2LjY3OSA3LjM0NFYyNy42NThsLTE2LjI5Ny02LjUwMnptMzQuMjc1IDBsLTE1LjA3MSA1LjczOHYyMS41NzVsMTUuMDcxLTYuMTJWMjEuMTU2eiIvPjwvc3ZnPg==" alt="AWS"><span class="bx-t1">aws certified</span><span class="bx-t2">Solutions Architect</span><span class="bx-strip">PROFESSIONAL</span></div>
+<div class="certx-name">AWS Certified Solutions Architect</div>
+<div class="certx-level">Professional</div>
+<div class="certx-issuer">Amazon Web Services</div>
+</div>
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="60">
+<div class="bx bx-circle" style="--b1:#326CE5;--b2:#4d8af0"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48ZyBmaWxsPSIjNDg2YmIzIj48cGF0aCBkPSJNNTYuNDg0IDU1LjA5OGMuMzcuMjcuODIuNDMgMS4zMS40MyAxLjIgMCAyLjE4LS45NSAyLjIzLTIuMTNsLjA1LS4wMy43NS0xMy4yNmMtLjkuMTEtMS44LjI2LTIuNy40Ni00LjkzIDEuMTItOS4yIDMuNTUtMTIuNTQgNi44M2wxMC44NyA3LjcxLjAzLS4wMXpNNTUuMDM0IDc0LjUyOGEyLjIxOCAyLjIxOCAwIDAwLTIuNTgtMS42OWwtLjAyLS4wMy0xMy4wNSAyLjIxYTI2LjE1IDI2LjE1IDAgMDAxMC41MSAxMy4xNWw1LjA2LTEyLjIyLS4wNC0uMDVjLjE3LS40Mi4yMy0uODkuMTItMS4zN3pNNTAuNjk0IDY1LjExOGMuNDQtLjEyLjg1LS4zOCAxLjE2LS43Ni43NS0uOTQuNjItMi4yOS0uMjgtMy4wN2wuMDEtLjA1LTkuOTMtOC44OGEyNi4wNyAyNi4wNyAwIDAwLTMuNyAxNi40OGwxMi43My0zLjY3LjAxLS4wNXpNNjAuMzM0IDY5LjAxOGwzLjY2IDEuNzYgMy42Ni0xLjc1LjktMy45NS0yLjUzLTMuMTZoLTQuMDZsLTIuNTQgMy4xNnpNNjcuOTM0IDUzLjM0OGMuMDIuNDYuMTguOTEuNDkgMS4yOS43NS45NCAyLjEgMS4xMSAzLjA2LjQxbC4wNC4wMiAxMC44LTcuNjZjLTQuMDgtMy45OS05LjQtNi42LTE1LjE1LTcuM2wuNzUgMTMuMjRoLjAxek03NS41MTQgNzIuNzc4Yy0uMTctLjAzLS4zNC0uMDUtLjUxLS4wNC0uMjkuMDEtLjU4LjA5LS44NS4yMmEyLjIzIDIuMjMgMCAwMC0xLjA4IDIuODlsLS4wMi4wMiA1LjExIDEyLjM0YzQuOTMtMy4xNCA4LjYxLTcuODMgMTAuNTQtMTMuMjRsLTEzLjE2LTIuMjMtLjAzLjA0ek02NS45NTQgNzkuMzE4YTIuMjQ2IDIuMjQ2IDAgMDAtMi4wNC0xLjE3Yy0uNzcuMDMtMS41LjQ2LTEuODkgMS4xOGgtLjAxbC02LjQyIDExLjZhMjYuMTYgMjYuMTYgMCAwMDE0LjI3LjczYy44OC0uMiAxLjc0LS40NCAyLjU3LS43MmwtNi40My0xMS42M2gtLjA1eiIvPjxwYXRoIGQ9Ik0xMjQuNTQ0IDc2Ljc4OGwtMTAuNDQtNDUuMzNhOC4wMTIgOC4wMTIgMCAwMC00LjM3LTUuNDNsLTQyLjI0LTIwLjE4YTguMTU3IDguMTU3IDAgMDAtMy45Mi0uNzggOC4xNSA4LjE1IDAgMDAtMy4xLjc4bC00Mi4yNCAyMC4xOGE4LjA1NSA4LjA1NSAwIDAwLTQuMzcgNS40M2wtMTAuNDEgNDUuMzRhNy45MiA3LjkyIDAgMDAxLjEgNi4xNGMuMTQuMjIuMy40My40Ni42NGwyOS4yNCAzNi4zNWE4LjA4NyA4LjA4NyAwIDAwNi4zMiAzLjAxbDQ2Ljg5LS4wMWMyLjQ2IDAgNC43OC0xLjExIDYuMzItMy4wMWwyOS4yMy0zNi4zNmE3Ljk4MSA3Ljk4MSAwIDAwMS41My02Ljc3em0tMTYuMDctLjU1Yy0uMzEgMS4zNS0xLjc2IDIuMTctMy4yNiAxLjg1LS4wMSAwLS4wMyAwLS4wNC0uMDEtLjAyIDAtLjAzLS4wMS0uMDUtLjAyLS4yMS0uMDUtLjQ3LS4wOS0uNjUtLjE0LS44Ni0uMjMtMS40OS0uNTgtMi4yNy0uODgtMS42Ny0uNi0zLjA2LTEuMS00LjQxLTEuMy0uNjktLjA1LTEuMDQuMjctMS40Mi41Mi0uMTgtLjA0LS43NS0uMTQtMS4wOC0uMTktMi40MiA3LjYxLTcuNTggMTQuMjEtMTQuNTcgMTguMzMuMTIuMjkuMzMuOTEuNDIgMS4wMi0uMTYuNDMtLjQuODMtLjE5IDEuNDkuNDkgMS4yNyAxLjI4IDIuNTIgMi4yNCA0LjAxLjQ2LjY5Ljk0IDEuMjIgMS4zNiAyLjAyLjEuMTkuMjMuNDguMzMuNjguNjUgMS4zOS4xNyAyLjk5LTEuMDggMy41OS0xLjI2LjYxLTIuODItLjAzLTMuNS0xLjQzLS4xLS4yLS4yMy0uNDYtLjMxLS42NS0uMzYtLjgyLS40OC0xLjUyLS43My0yLjMyLS41Ny0xLjY4LTEuMDUtMy4wNy0xLjczLTQuMjUtLjM5LS41Ny0uODYtLjY0LTEuMjktLjc4LS4wOC0uMTQtLjM4LS42OS0uNTQtLjk3LTEuNC41My0yLjg0Ljk3LTQuMzQgMS4zMS02LjU2IDEuNDktMTMuMTMuODktMTguOTktMS4zN2wtLjU3IDEuMDRjLS40My4xMS0uODQuMjMtMS4wOS41My0uOTIgMS4xLTEuMjkgMi44Ni0xLjk2IDQuNTQtLjI1Ljc5LS4zNyAxLjUtLjczIDIuMzItLjA4LjE5LS4yMi40NS0uMzEuNjR2LjAxbC0uMDEuMDFjLS42NyAxLjM5LTIuMjMgMi4wMy0zLjQ5IDEuNDMtMS4yNS0uNi0xLjcyLTIuMi0xLjA4LTMuNTkuMS0uMi4yMi0uNDkuMzItLjY4LjQyLS43OS44OS0xLjMzIDEuMzYtMi4wMi45Ni0xLjUgMS44LTIuODQgMi4yOS00LjExLjEyLS40Mi0uMDYtMS0uMjItMS40M2wuNDYtMS4xYy02LjczLTMuOTktMTIuMDQtMTAuMzQtMTQuNTgtMTguMjFsLTEuMS4xOWMtLjMtLjE3LS44OS0uNTYtMS40NS0uNTEtMS4zNS4yLTIuNzQuNy00LjQxIDEuMy0uNzguMy0xLjQuNjQtMi4yNy44Ny0uMTguMDUtLjQ0LjEtLjY1LjE1LS4wMiAwLS4wMy4wMS0uMDUuMDItLjAxIDAtLjAzIDAtLjA0LjAxLTEuNS4zMi0yLjk1LS41LTMuMjYtMS44NS0uMzEtMS4zNS42NS0yLjcyIDIuMTQtMy4wOC4wMSAwIC4wMy0uMDEuMDQtLjAxLjAxIDAgLjAxIDAgLjAyLS4wMS4yMS0uMDUuNDgtLjEyLjY4LS4xNi44OC0uMTcgMS42LS4xMyAyLjQzLS4xOSAxLjc3LS4xOSAzLjIzLS4zNCA0LjUzLS43NS40MS0uMTcuODEtLjc0IDEuMDktMS4xbDEuMDYtLjMxYy0xLjE5LTguMjIuODItMTYuMjggNS4xNi0yMi44MWwtLjgxLS43MmMtLjA1LS4zMi0uMTItMS4wNC0uNTEtMS40Ni0uOTktLjkzLTIuMjUtMS43MS0zLjc2LTIuNjQtLjcyLS40Mi0xLjM4LS42OS0yLjEtMS4yMy0uMTUtLjExLS4zNi0uMjktLjUyLS40Mi0uMDEtLjAxLS4wMy0uMDItLjA0LS4wMy0xLjIxLS45Ny0xLjQ5LTIuNjQtLjYyLTMuNzMuNDktLjYxIDEuMjQtLjkyIDIuMDEtLjg5LjYuMDIgMS4yMy4yNCAxLjc2LjY2LjE3LjE0LjQxLjMyLjU2LjQ1LjY4LjU4IDEuMDkgMS4xNiAxLjY2IDEuNzcgMS4yNSAxLjI3IDIuMjggMi4zMiAzLjQxIDMuMDguNTkuMzUgMS4wNS4yMSAxLjUuMTUuMTUuMTEuNjMuNDYuOTEuNjUgNC4zLTQuNTcgOS45Ni03Ljk1IDE2LjUyLTkuNDQgMS41My0uMzUgMy4wNS0uNTggNC41Ny0uN2wuMDYtMS4wN2MuMzQtLjMzLjcxLS43OS44Mi0xLjMxLjExLTEuMzYtLjA3LTIuODItLjI4LTQuNTktLjEyLS44Mi0uMzEtMS41MS0uMzUtMi40LS4wMS0uMTggMC0uNDQuMDEtLjY1IDAtLjAyLS4wMS0uMDUtLjAxLS4wNyAwLTEuNTUgMS4xMy0yLjgxIDIuNTMtMi44MXMyLjUzIDEuMjYgMi41MyAyLjgxYzAgLjIyLjAxLjUyLjAxLjcyLS4wMy44OS0uMjMgMS41OC0uMzUgMi40LS4yMSAxLjc2LS40IDMuMjMtLjI5IDQuNTkuMS42OC41Ljk1LjgzIDEuMjYuMDEuMTguMDQuNzkuMDYgMS4xMyA4LjA0LjcxIDE1LjUgNC4zOSAyMC45OSAxMC4xNGwuOTYtLjY5Yy4zMy4wMiAxLjA0LjEyIDEuNTMtLjE3IDEuMTMtLjc2IDIuMTYtMS44MiAzLjQxLTMuMDguNTctLjYxLjk5LTEuMTggMS42Ny0xLjc3LjE1LS4xMy4zOS0uMzEuNTYtLjQ1IDEuMjEtLjk3IDIuOS0uODYgMy43Ny4yM3MuNTkgMi43Ni0uNjIgMy43M2MtLjE3LjE0LS4zOS4zMy0uNTYuNDUtLjcyLjUzLTEuMzguOC0yLjEgMS4yMy0xLjUxLjkzLTIuNzcgMS43MS0zLjc2IDIuNjQtLjQ3LjUtLjQzLjk4LS40OCAxLjQzLS4xNC4xMy0uNjMuNTctLjkuOGEzMi43NSAzMi43NSAwIDAxNC43NCAxMC45NWMuOTIgMy45OSAxLjA2IDcuOTcuNTMgMTEuOGwxLjAyLjNjLjE4LjI2LjU2Ljg5IDEuMDkgMS4xIDEuMy40MSAyLjc2LjU2IDQuNTMuNzUuODMuMDcgMS41NS4wMyAyLjQzLjE5LjIxLjA0LjUyLjEyLjczLjE3IDEuNS4zNyAyLjQ1IDEuNzQgMi4xNCAzLjA5eiIvPjxwYXRoIGQ9Ik04Ni4yNzQgNTIuMzU4bC05Ljg4IDguODQuMDEuMDNjLS4zNC4zLS42LjctLjcxIDEuMTgtLjI3IDEuMTcuNDQgMi4zMyAxLjU4IDIuNjVsLjAxLjA1IDEyLjc5IDMuNjhjLjI3LTIuNzYuMTEtNS42Mi0uNTUtOC40OC0uNjYtMi44OS0xLjc3LTUuNTYtMy4yNS03Ljk1eiIvPjwvZz48L3N2Zz4=" alt="Kubernetes"><span class="bx-t2">CERTIFIED</span><span class="bx-t3">CKA</span></div>
+<div class="certx-name">Certified Kubernetes Administrator</div>
+<div class="certx-level">CKA</div>
+<div class="certx-issuer">Linux Foundation / CNCF</div>
+</div>
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="120">
+<div class="bx bx-shield" style="--b1:#0b2e5b;--b2:#0089D6"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImF6dXJlLW9yaWdpbmFsLWEiIHgxPSI2MC45MTkiIHkxPSI5LjYwMiIgeDI9IjE4LjY2NyIgeTI9IjEzNC40MjMiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjMTE0QThCIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMDY2OUJDIi8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImF6dXJlLW9yaWdpbmFsLWIiIHgxPSI3NC4xMTciIHkxPSI2Ny43NzIiIHgyPSI2NC4zNDQiIHkyPSI3MS4wNzYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLW9wYWNpdHk9Ii4zIi8+PHN0b3Agb2Zmc2V0PSIuMDcxIiBzdG9wLW9wYWNpdHk9Ii4yIi8+PHN0b3Agb2Zmc2V0PSIuMzIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PHN0b3Agb2Zmc2V0PSIuNjIzIiBzdG9wLW9wYWNpdHk9Ii4wNSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48bGluZWFyR3JhZGllbnQgaWQ9ImF6dXJlLW9yaWdpbmFsLWMiIHgxPSI2OC43NDIiIHkxPSI1Ljk2MSIgeDI9IjExNS4xMjIiIHkyPSIxMjkuNTI1IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHN0b3Agc3RvcC1jb2xvcj0iIzNDQ0JGNCIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzI4OTJERiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik00Ni4wOS4wMDJoNDAuNjg1TDQ0LjU0MSAxMjUuMTM3YTYuNDg1IDYuNDg1IDAgMDEtNi4xNDYgNC40MTNINi43MzNhNi40ODIgNi40ODIgMCAwMS01LjI2Mi0yLjY5OSA2LjQ3NCA2LjQ3NCAwIDAxLS44NzYtNS44NDhMMzkuOTQ0IDQuNDE0QTYuNDg4IDYuNDg4IDAgMDE0Ni4wOSAweiIgZmlsbD0idXJsKCNhenVyZS1vcmlnaW5hbC1hKSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLjU4NyA0LjQ2OCkgc2NhbGUoLjkxOTA0KSIvPjxwYXRoIGQ9Ik05Ny4yOCA4MS42MDdIMzcuOTg3YTIuNzQzIDIuNzQzIDAgMDAtMS44NzQgNC43NTFsMzguMSAzNS41NjJhNS45OTEgNS45OTEgMCAwMDQuMDg3IDEuNjFoMzMuNTc0eiIgZmlsbD0iIzAwNzhkNCIvPjxwYXRoIGQ9Ik00Ni4wOS4wMDJBNi40MzQgNi40MzQgMCAwMDM5LjkzIDQuNUwuNjQ0IDEyMC44OTdhNi40NjkgNi40NjkgMCAwMDYuMTA2IDguNjUzaDMyLjQ4YTYuOTQyIDYuOTQyIDAgMDA1LjMyOC00LjUzMWw3LjgzNC0yMy4wODkgMjcuOTg1IDI2LjEwMWE2LjYxOCA2LjYxOCAwIDAwNC4xNjUgMS41MTloMzYuMzk2bC0xNS45NjMtNDUuNjE2LTQ2LjUzMy4wMTFMODYuOTIyLjAwMnoiIGZpbGw9InVybCgjYXp1cmUtb3JpZ2luYWwtYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC41ODcgNC40NjgpIHNjYWxlKC45MTkwNCkiLz48cGF0aCBkPSJNOTguMDU1IDQuNDA4QTYuNDc2IDYuNDc2IDAgMDA5MS45MTcuMDAySDQ2LjU3NWE2LjQ3OCA2LjQ3OCAwIDAxNi4xMzcgNC40MDZsMzkuMzUgMTE2LjU5NGE2LjQ3NiA2LjQ3NiAwIDAxLTYuMTM3IDguNTVoNDUuMzQ0YTYuNDggNi40OCAwIDAwNi4xMzYtOC41NXoiIGZpbGw9InVybCgjYXp1cmUtb3JpZ2luYWwtYykiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC41ODcgNC40NjgpIHNjYWxlKC45MTkwNCkiLz48L3N2Zz4K" alt="Azure"><span class="bx-t1">MICROSOFT CERTIFIED</span><span class="bx-t2">DevOps Engineer</span><span class="bx-stars">★★★</span><span class="bx-strip">EXPERT</span></div>
+<div class="certx-name">Azure DevOps Engineer</div>
+<div class="certx-level">Expert</div>
+<div class="certx-issuer">Microsoft Azure</div>
+</div>
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="180">
+<div class="bx bx-rect" style="--b1:#171123;--b2:#7B42BC"><span class="bx-head">Terraform</span><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48ZyBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik03Ny45NDEgNDQuNXYzNi44MzZMNDYuMzI0IDYyLjkxOFYyNi4wODJ6bTAgMCIgZmlsbD0iIzVjNGVlNSIvPjxwYXRoIGQ9Ik04MS40MSA4MS4zMzZsMzEuNjMzLTE4LjQxOFYyNi4wODJMODEuNDEgNDQuNXptMCAwIiBmaWxsPSIjNDA0MGIyIi8+PHBhdGggZD0iTTExLjI0MiA0Mi4zNkw0Mi44NiA2MC43NzZWMjMuOTQxTDExLjI0MiA1LjUyM3ptMCAwTTc3Ljk0MSA4NS4zNzVMNDYuMzI0IDY2Ljk1N3YzNi44MmwzMS42MTcgMTguNDE4em0wIDAiIGZpbGw9IiM1YzRlZTUiLz48L2c+PC9zdmc+Cg==" alt="Terraform"><span class="bx-t1">CERTIFIED</span><span class="bx-t2">ASSOCIATE</span></div>
+<div class="certx-name">HashiCorp Terraform Associate</div>
+<div class="certx-level">Associate</div>
+<div class="certx-issuer">HashiCorp</div>
+</div>
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="0">
+<div class="bx bx-circle bx-gold" style="--b1:#fbbc05;--b2:#ea8600"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjZWE0NTM1IiBkPSJNODAuNiA0MC4zaC40bC0uMi0uMiAxNC0xNHYtLjNjLTExLjgtMTAuNC0yOC4xLTE0LTQzLjItOS41QzM2LjUgMjAuOCAyNC45IDMyLjggMjAuNyA0OGMuMi0uMS41LS4yLjgtLjIgNS4yLTMuNCAxMS40LTUuNCAxNy45LTUuNCAyLjIgMCA0LjMuMiA2LjQuNi4xLS4xLjItLjEuMy0uMSA5LTkuOSAyNC4yLTExLjEgMzQuNi0yLjZoLS4xeiIvPjxwYXRoIGZpbGw9IiM1NTdlYmYiIGQ9Ik0xMDguMSA0Ny44Yy0yLjMtOC41LTcuMS0xNi4yLTEzLjgtMjIuMUw4MCAzOS45YzYgNC45IDkuNSAxMi4zIDkuMyAyMHYyLjVjMTYuOSAwIDE2LjkgMjUuMiAwIDI1LjJINjMuOXYyMGgtLjFsLjEuMmgyNS40YzE0LjYuMSAyNy41LTkuMyAzMS44LTIzLjEgNC4zLTEzLjgtMS0yOC44LTEzLTM2Ljl6Ii8+PHBhdGggZmlsbD0iIzM2YTg1MiIgZD0iTTM5IDEwNy45aDI2LjNWODcuN0gzOWMtMS45IDAtMy43LS40LTUuNC0xLjFsLTE1LjIgMTQuNnYuMmM2IDQuMyAxMy4yIDYuNiAyMC43IDYuNnoiLz48cGF0aCBmaWxsPSIjZjliYzE1IiBkPSJNNDAuMiA0MS45Yy0xNC45LjEtMjguMSA5LjMtMzIuOSAyMi44LTQuOCAxMy42IDAgMjguNSAxMS44IDM3LjNsMTUuNi0xNC45Yy04LjYtMy43LTEwLjYtMTQuNS00LTIwLjggNi42LTYuNCAxNy44LTQuNCAyMS43IDMuOEw2OCA1NS4yQzYxLjQgNDYuOSA1MS4xIDQyIDQwLjIgNDIuMXoiLz48L3N2Zz4=" alt="Google Cloud"><span class="bx-t2">Google Cloud</span><span class="bx-t3">PRO</span></div>
+<div class="certx-name">GCP Professional DevOps Engineer</div>
+<div class="certx-level">Professional</div>
+<div class="certx-issuer">Google Cloud</div>
+</div>
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="60">
+<div class="bx bx-rect" style="--b1:#0b4f8f;--b2:#2496ED"><span class="bx-head">docker</span><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzNBNEQ1NCIgZD0iTTczLjggNTAuOGgxMS4zdjExLjVoNS43YzIuNiAwIDUuMy0uNSA3LjgtMS4zIDEuMi0uNCAyLjYtMSAzLjgtMS43LTEuNi0yLjEtMi40LTQuNy0yLjYtNy4zLS4zLTMuNS40LTguMSAyLjgtMTAuOGwxLjItMS40IDEuNCAxLjFjMy42IDIuOSA2LjUgNi44IDcuMSAxMS40IDQuMy0xLjMgOS4zLTEgMTMuMSAxLjJsMS41LjktLjggMS42Yy0zLjIgNi4yLTkuOSA4LjItMTYuNCA3LjgtOS44IDI0LjMtMzEgMzUuOC01Ni44IDM1LjgtMTMuMyAwLTI1LjUtNS0zMi41LTE2LjhsLS4xLS4yLTEtMi4xYy0yLjQtNS4yLTMuMS0xMC45LTIuNi0xNi42bC4yLTEuN2g5LjZWNTAuOGgxMS4zVjM5LjZoMjIuNVYyOC4zaDEzLjV2MjIuNXoiLz48cGF0aCBmaWxsPSIjMDBBQURBIiBkPSJNMTEwLjQgNTUuMWMuOC01LjktMy42LTEwLjUtNi40LTEyLjctMy4xIDMuNi0zLjYgMTMuMiAxLjMgMTcuMi0yLjggMi40LTguNSA0LjctMTQuNSA0LjdIMTguNmMtLjYgNi4yLjUgMTEuOSAzIDE2LjhsLjggMS41Yy41LjkgMS4xIDEuNyAxLjcgMi42IDMgLjIgNS43LjMgOC4yLjIgNC45LS4xIDguOS0uNyAxMi0xLjcuNS0uMi45LjEgMS4xLjUuMi41LS4xLjktLjUgMS4xLS40LjEtLjguMy0xLjMuNC0yLjQuNy01IDEuMS04LjMgMS4zaC0uNmMtMS4zLjEtMi43LjEtNC4yLjEtMS42IDAtMy4xIDAtNC45LS4xIDYgNi44IDE1LjQgMTAuOCAyNy4yIDEwLjggMjUgMCA0Ni4yLTExLjEgNTUuNS0zNS45IDYuNy43IDEzLjEtMSAxNi02LjctNC41LTIuNy0xMC41LTEuOC0xMy45LS4xeiIvPjxwYXRoIGZpbGw9IiMyOEI4RUIiIGQ9Ik0xMTAuNCA1NS4xYy44LTUuOS0zLjYtMTAuNS02LjQtMTIuNy0zLjEgMy42LTMuNiAxMy4yIDEuMyAxNy4yLTIuOCAyLjQtOC41IDQuNy0xNC41IDQuN2gtNjhjLS4zIDkuNSAzLjIgMTYuNyA5LjUgMjEgNC45LS4xIDguOS0uNyAxMi0xLjcuNS0uMi45LjEgMS4xLjUuMi41LS4xLjktLjUgMS4xLS40LjEtLjguMy0xLjMuNC0yLjQuNy01LjIgMS4yLTguNSAxLjRsLS4xLS4xYzguNSA0LjQgMjAuOCA0LjMgMzUtMS4xIDE1LjgtNi4xIDMwLjYtMTcuNyA0MC45LTMwLjktLjIuMS0uNC4xLS41LjJ6Ii8+PHBhdGggZmlsbD0iIzAyOEJCOCIgZD0iTTE4LjcgNzEuOGMuNCAzLjMgMS40IDYuNCAyLjkgOS4zbC44IDEuNWMuNS45IDEuMSAxLjcgMS43IDIuNiAzIC4yIDUuNy4zIDguMi4yIDQuOS0uMSA4LjktLjcgMTItMS43LjUtLjIuOS4xIDEuMS41LjIuNS0uMS45LS41IDEuMS0uNC4xLS44LjMtMS4zLjQtMi40LjctNS4yIDEuMi04LjUgMS40aC0uNGMtMS4zLjEtMi43LjEtNC4xLjEtMS42IDAtMy4yIDAtNC45LS4xIDYgNi44IDE1LjUgMTAuOCAyNy4zIDEwLjggMjEuNCAwIDQwLTguMSA1MC44LTI2SDE4Ljd2LS4xeiIvPjxwYXRoIGZpbGw9IiMwMTlCQzYiIGQ9Ik0yMy41IDcxLjhjMS4zIDUuOCA0LjMgMTAuNCA4LjggMTMuNSA0LjktLjEgOC45LS43IDEyLTEuNy41LS4yLjkuMSAxLjEuNS4yLjUtLjEuOS0uNSAxLjEtLjQuMS0uOC4zLTEuMy40LTIuNC43LTUuMiAxLjItOC42IDEuNCA4LjUgNC40IDIwLjggNC4zIDM0LjktMS4xIDguNS0zLjMgMTYuOC04LjIgMjQuMi0xNC4xSDIzLjV6Ii8+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiMwMEFDRDMiIGQ9Ik0yOC40IDUyLjdoOS44djkuOGgtOS44di05Ljh6bS44LjhoLjh2OC4xaC0uOHYtOC4xem0xLjQgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXptMy0xMmg5Ljh2OS44aC05Ljh2LTkuOHptLjkuOGguOHY4LjFoLS44di04LjF6bTEuNCAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNCAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xeiIvPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjMjNDMkVFIiBkPSJNMzkuNiA1Mi43aDkuOHY5LjhoLTkuOHYtOS44em0uOS44aC44djguMWgtLjh2LTguMXptMS40IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXptMS40IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6Ii8+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiMwMEFDRDMiIGQ9Ik01MC45IDUyLjdoOS44djkuOGgtOS44di05Ljh6bS44LjhoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXptMS40IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXoiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzIzQzJFRSIgZD0iTTUwLjkgNDEuNWg5Ljh2OS44aC05Ljh2LTkuOHptLjguOGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xem0xLjQgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xem0zLjEgMTAuNEg3MnY5LjhoLTkuOHYtOS44em0uOC44aC44djguMUg2M3YtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNCAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXoiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzAwQUNEMyIgZD0iTTYyLjIgNDEuNUg3MnY5LjhoLTkuOHYtOS44em0uOC44aC44djguMUg2M3YtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNCAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXoiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZmlsbD0iIzIzQzJFRSIgZD0iTTYyLjIgMzAuMkg3MlY0MGgtOS44di05Ljh6bS44LjhoLjh2OC4xSDYzVjMxem0xLjUgMGguOHY4LjFoLS44VjMxem0xLjQgMGguOHY4LjFoLS44VjMxem0xLjUgMGguOHY4LjFoLS44VjMxem0xLjUgMGguOHY4LjFoLS44VjMxem0xLjUgMGguOHY4LjFoLS44VjMxeiIvPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBmaWxsPSIjMDBBQ0QzIiBkPSJNNzMuNSA1Mi43aDkuOHY5LjhoLTkuOHYtOS44em0uOC44aC44djguMWgtLjh2LTguMXptMS40IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6bTEuNSAwaC44djguMWgtLjh2LTguMXptMS41IDBoLjh2OC4xaC0uOHYtOC4xem0xLjUgMGguOHY4LjFoLS44di04LjF6Ii8+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiNENEVFRjEiIGQ9Ik00OC44IDc4LjNjMS41IDAgMi43IDEuMiAyLjcgMi43IDAgMS41LTEuMiAyLjctMi43IDIuNy0xLjUgMC0yLjctMS4yLTIuNy0yLjcgMC0xLjUgMS4yLTIuNyAyLjctMi43Ii8+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGZpbGw9IiMzQTRENTQiIGQ9Ik00OC44IDc5LjFjLjIgMCAuNSAwIC43LjEtLjIuMS0uNC40LS40LjcgMCAuNC40LjguOC44LjMgMCAuNi0uMi43LS40LjEuMi4xLjUuMS43IDAgMS4xLS45IDEuOS0xLjkgMS45LTEuMSAwLTEuOS0uOS0xLjktMS45IDAtMSAuOC0xLjkgMS45LTEuOU0xLjEgNzIuOGgxMjUuNGMtMi43LS43LTguNi0xLjYtNy43LTUuMi01IDUuNy0xNi45IDQtMjAgMS4yLTMuNCA0LjktMjMgMy0yNC4zLS44LTQuMiA1LTE3LjMgNS0yMS41IDAtMS40IDMuOC0yMSA1LjctMjQuMy44LTMgMi44LTE1IDQuNS0yMC0xLjIgMS4xIDMuNS00LjkgNC41LTcuNiA1LjIiLz48cGF0aCBmaWxsPSIjQkZEQkUwIiBkPSJNNTYgOTcuOGMtNi43LTMuMi0xMC4zLTcuNS0xMi40LTEyLjItMi41LjctNS41IDEuMi04LjkgMS40LTEuMy4xLTIuNy4xLTQuMS4xLTEuNyAwLTMuNCAwLTUuMi0uMSA2IDYgMTMuNiAxMC43IDI3LjUgMTAuOEg1NnoiLz48cGF0aCBmaWxsPSIjRDRFRUYxIiBkPSJNNDYuMSA4OS45Yy0uOS0xLjMtMS44LTIuOC0yLjUtNC4zLTIuNS43LTUuNSAxLjItOC45IDEuNCAyLjMgMS4yIDUuNyAyLjQgMTEuNCAyLjl6Ii8+PC9zdmc+" alt="Docker"><span class="bx-t1">CERTIFIED</span><span class="bx-t2">ASSOCIATE</span></div>
+<div class="certx-name">Docker Certified Associate</div>
+<div class="certx-level">Associate</div>
+<div class="certx-issuer">Docker Inc.</div>
+</div>
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="120">
+<div class="bx bx-hex" style="--b1:#b4560c;--b2:#FF9900"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cGF0aCBmaWxsPSIjRjdBODBEIiBkPSJNMzguMDg5IDc3LjQ2NmwtMTEuNCA0Ljg5NiAxMC41NTkgNC41MTQgMTIuMjQxLTQuNTE0LTExLjQtNC44OTZ6bS0xNy4xMzggNi4xMmwtLjM4MiAyMi4wMzQgMTYuNjc5IDcuMzQ1VjkwLjA4OWwtMTYuMjk3LTYuNTAzem0zNC4yNzYgMGwtMTUuMDczIDUuNzM5VjExMC45bDE1LjA3My02LjEyMVY4My41ODZ6bTE3Ljk3OS02OC41NTFMNjEuNzMgMTkuOTMxbDEwLjYzNSA0LjUxNSAxMi4yNDEtNC41MTUtMTEuNC00Ljg5NnptLTE1LjkxNCA2LjUwM3YyMi4wMzRsMTQuMjMxIDQuMTMyLjQ1OS0yMC4wNDYtMTQuNjktNi4xMnptMzEuODI4IDEuMjI0TDc1LjY1NCAyOC41djIxLjY1MmwxMy40NjYtNi4xMjFWMjIuNzYyek0xOS4zMDYgNDYuMDQ3TDcuOTA3IDUwLjk0NGwxMC41NTggNC41MTQgMTIuMjQxLTQuNTE0LTExLjQtNC44OTd6TTIuMTY4IDUyLjE2OGwtLjM4MiAyMi4wMzQgMTYuNjc5IDcuMzQ1VjU4LjY3MUwyLjE2OCA1Mi4xNjh6bTM0LjI3NSAwbC0xNS4wNzEgNS43MzhWNzkuNDhsMTUuMDcxLTYuMTJWNTIuMTY4em0xOS41ODctNi45MzdsLTExLjQgNC44OTcgMTAuNTU4IDQuNTE0IDEyLjI0MS00LjUxNC0xMS4zOTktNC44OTd6bS0xNy4xMzcgNi4xMjFsLS4zODMgMjIuMDM1IDE2LjY3OSA3LjM0NVY1Ny44NTVsLTE2LjI5Ni02LjUwM3ptMzQuMjc1IDBMNTguMDk2IDU3LjA5djIxLjU3NmwxNS4wNzItNi4xMjFWNTEuMzUyem0zNS45MDgtMzYuMzE3bC0xMS4zOTkgNC44OTYgMTAuNTU5IDQuNTE1IDEyLjI0MS00LjUxNS0xMS40MDEtNC44OTZ6bS0xNy4xMzcgNi4xMjFsLS4zODIgMjIuMDM0IDE2LjY3OSA3LjM0NFYyNy42NThsLTE2LjI5Ny02LjUwMnptMzQuMjc1IDBsLTE1LjA3MSA1LjczOHYyMS41NzVsMTUuMDcxLTYuMTJWMjEuMTU2eiIvPjwvc3ZnPg==" alt="AWS"><span class="bx-t1">aws certified</span><span class="bx-t2">DevOps Engineer</span><span class="bx-strip">PROFESSIONAL</span></div>
+<div class="certx-name">AWS Certified DevOps Engineer</div>
+<div class="certx-level">Professional</div>
+<div class="certx-issuer">Amazon Web Services</div>
+</div>
+<div class="certx-card" data-aos="zoom-in" data-aos-delay="180">
+<div class="bx bx-circle" style="--b1:#326CE5;--b2:#7aa5f5"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48ZyBmaWxsPSIjNDg2YmIzIj48cGF0aCBkPSJNNTYuNDg0IDU1LjA5OGMuMzcuMjcuODIuNDMgMS4zMS40MyAxLjIgMCAyLjE4LS45NSAyLjIzLTIuMTNsLjA1LS4wMy43NS0xMy4yNmMtLjkuMTEtMS44LjI2LTIuNy40Ni00LjkzIDEuMTItOS4yIDMuNTUtMTIuNTQgNi44M2wxMC44NyA3LjcxLjAzLS4wMXpNNTUuMDM0IDc0LjUyOGEyLjIxOCAyLjIxOCAwIDAwLTIuNTgtMS42OWwtLjAyLS4wMy0xMy4wNSAyLjIxYTI2LjE1IDI2LjE1IDAgMDAxMC41MSAxMy4xNWw1LjA2LTEyLjIyLS4wNC0uMDVjLjE3LS40Mi4yMy0uODkuMTItMS4zN3pNNTAuNjk0IDY1LjExOGMuNDQtLjEyLjg1LS4zOCAxLjE2LS43Ni43NS0uOTQuNjItMi4yOS0uMjgtMy4wN2wuMDEtLjA1LTkuOTMtOC44OGEyNi4wNyAyNi4wNyAwIDAwLTMuNyAxNi40OGwxMi43My0zLjY3LjAxLS4wNXpNNjAuMzM0IDY5LjAxOGwzLjY2IDEuNzYgMy42Ni0xLjc1LjktMy45NS0yLjUzLTMuMTZoLTQuMDZsLTIuNTQgMy4xNnpNNjcuOTM0IDUzLjM0OGMuMDIuNDYuMTguOTEuNDkgMS4yOS43NS45NCAyLjEgMS4xMSAzLjA2LjQxbC4wNC4wMiAxMC44LTcuNjZjLTQuMDgtMy45OS05LjQtNi42LTE1LjE1LTcuM2wuNzUgMTMuMjRoLjAxek03NS41MTQgNzIuNzc4Yy0uMTctLjAzLS4zNC0uMDUtLjUxLS4wNC0uMjkuMDEtLjU4LjA5LS44NS4yMmEyLjIzIDIuMjMgMCAwMC0xLjA4IDIuODlsLS4wMi4wMiA1LjExIDEyLjM0YzQuOTMtMy4xNCA4LjYxLTcuODMgMTAuNTQtMTMuMjRsLTEzLjE2LTIuMjMtLjAzLjA0ek02NS45NTQgNzkuMzE4YTIuMjQ2IDIuMjQ2IDAgMDAtMi4wNC0xLjE3Yy0uNzcuMDMtMS41LjQ2LTEuODkgMS4xOGgtLjAxbC02LjQyIDExLjZhMjYuMTYgMjYuMTYgMCAwMDE0LjI3LjczYy44OC0uMiAxLjc0LS40NCAyLjU3LS43MmwtNi40My0xMS42M2gtLjA1eiIvPjxwYXRoIGQ9Ik0xMjQuNTQ0IDc2Ljc4OGwtMTAuNDQtNDUuMzNhOC4wMTIgOC4wMTIgMCAwMC00LjM3LTUuNDNsLTQyLjI0LTIwLjE4YTguMTU3IDguMTU3IDAgMDAtMy45Mi0uNzggOC4xNSA4LjE1IDAgMDAtMy4xLjc4bC00Mi4yNCAyMC4xOGE4LjA1NSA4LjA1NSAwIDAwLTQuMzcgNS40M2wtMTAuNDEgNDUuMzRhNy45MiA3LjkyIDAgMDAxLjEgNi4xNGMuMTQuMjIuMy40My40Ni42NGwyOS4yNCAzNi4zNWE4LjA4NyA4LjA4NyAwIDAwNi4zMiAzLjAxbDQ2Ljg5LS4wMWMyLjQ2IDAgNC43OC0xLjExIDYuMzItMy4wMWwyOS4yMy0zNi4zNmE3Ljk4MSA3Ljk4MSAwIDAwMS41My02Ljc3em0tMTYuMDctLjU1Yy0uMzEgMS4zNS0xLjc2IDIuMTctMy4yNiAxLjg1LS4wMSAwLS4wMyAwLS4wNC0uMDEtLjAyIDAtLjAzLS4wMS0uMDUtLjAyLS4yMS0uMDUtLjQ3LS4wOS0uNjUtLjE0LS44Ni0uMjMtMS40OS0uNTgtMi4yNy0uODgtMS42Ny0uNi0zLjA2LTEuMS00LjQxLTEuMy0uNjktLjA1LTEuMDQuMjctMS40Mi41Mi0uMTgtLjA0LS43NS0uMTQtMS4wOC0uMTktMi40MiA3LjYxLTcuNTggMTQuMjEtMTQuNTcgMTguMzMuMTIuMjkuMzMuOTEuNDIgMS4wMi0uMTYuNDMtLjQuODMtLjE5IDEuNDkuNDkgMS4yNyAxLjI4IDIuNTIgMi4yNCA0LjAxLjQ2LjY5Ljk0IDEuMjIgMS4zNiAyLjAyLjEuMTkuMjMuNDguMzMuNjguNjUgMS4zOS4xNyAyLjk5LTEuMDggMy41OS0xLjI2LjYxLTIuODItLjAzLTMuNS0xLjQzLS4xLS4yLS4yMy0uNDYtLjMxLS42NS0uMzYtLjgyLS40OC0xLjUyLS43My0yLjMyLS41Ny0xLjY4LTEuMDUtMy4wNy0xLjczLTQuMjUtLjM5LS41Ny0uODYtLjY0LTEuMjktLjc4LS4wOC0uMTQtLjM4LS42OS0uNTQtLjk3LTEuNC41My0yLjg0Ljk3LTQuMzQgMS4zMS02LjU2IDEuNDktMTMuMTMuODktMTguOTktMS4zN2wtLjU3IDEuMDRjLS40My4xMS0uODQuMjMtMS4wOS41My0uOTIgMS4xLTEuMjkgMi44Ni0xLjk2IDQuNTQtLjI1Ljc5LS4zNyAxLjUtLjczIDIuMzItLjA4LjE5LS4yMi40NS0uMzEuNjR2LjAxbC0uMDEuMDFjLS42NyAxLjM5LTIuMjMgMi4wMy0zLjQ5IDEuNDMtMS4yNS0uNi0xLjcyLTIuMi0xLjA4LTMuNTkuMS0uMi4yMi0uNDkuMzItLjY4LjQyLS43OS44OS0xLjMzIDEuMzYtMi4wMi45Ni0xLjUgMS44LTIuODQgMi4yOS00LjExLjEyLS40Mi0uMDYtMS0uMjItMS40M2wuNDYtMS4xYy02LjczLTMuOTktMTIuMDQtMTAuMzQtMTQuNTgtMTguMjFsLTEuMS4xOWMtLjMtLjE3LS44OS0uNTYtMS40NS0uNTEtMS4zNS4yLTIuNzQuNy00LjQxIDEuMy0uNzguMy0xLjQuNjQtMi4yNy44Ny0uMTguMDUtLjQ0LjEtLjY1LjE1LS4wMiAwLS4wMy4wMS0uMDUuMDItLjAxIDAtLjAzIDAtLjA0LjAxLTEuNS4zMi0yLjk1LS41LTMuMjYtMS44NS0uMzEtMS4zNS42NS0yLjcyIDIuMTQtMy4wOC4wMSAwIC4wMy0uMDEuMDQtLjAxLjAxIDAgLjAxIDAgLjAyLS4wMS4yMS0uMDUuNDgtLjEyLjY4LS4xNi44OC0uMTcgMS42LS4xMyAyLjQzLS4xOSAxLjc3LS4xOSAzLjIzLS4zNCA0LjUzLS43NS40MS0uMTcuODEtLjc0IDEuMDktMS4xbDEuMDYtLjMxYy0xLjE5LTguMjIuODItMTYuMjggNS4xNi0yMi44MWwtLjgxLS43MmMtLjA1LS4zMi0uMTItMS4wNC0uNTEtMS40Ni0uOTktLjkzLTIuMjUtMS43MS0zLjc2LTIuNjQtLjcyLS40Mi0xLjM4LS42OS0yLjEtMS4yMy0uMTUtLjExLS4zNi0uMjktLjUyLS40Mi0uMDEtLjAxLS4wMy0uMDItLjA0LS4wMy0xLjIxLS45Ny0xLjQ5LTIuNjQtLjYyLTMuNzMuNDktLjYxIDEuMjQtLjkyIDIuMDEtLjg5LjYuMDIgMS4yMy4yNCAxLjc2LjY2LjE3LjE0LjQxLjMyLjU2LjQ1LjY4LjU4IDEuMDkgMS4xNiAxLjY2IDEuNzcgMS4yNSAxLjI3IDIuMjggMi4zMiAzLjQxIDMuMDguNTkuMzUgMS4wNS4yMSAxLjUuMTUuMTUuMTEuNjMuNDYuOTEuNjUgNC4zLTQuNTcgOS45Ni03Ljk1IDE2LjUyLTkuNDQgMS41My0uMzUgMy4wNS0uNTggNC41Ny0uN2wuMDYtMS4wN2MuMzQtLjMzLjcxLS43OS44Mi0xLjMxLjExLTEuMzYtLjA3LTIuODItLjI4LTQuNTktLjEyLS44Mi0uMzEtMS41MS0uMzUtMi40LS4wMS0uMTggMC0uNDQuMDEtLjY1IDAtLjAyLS4wMS0uMDUtLjAxLS4wNyAwLTEuNTUgMS4xMy0yLjgxIDIuNTMtMi44MXMyLjUzIDEuMjYgMi41MyAyLjgxYzAgLjIyLjAxLjUyLjAxLjcyLS4wMy44OS0uMjMgMS41OC0uMzUgMi40LS4yMSAxLjc2LS40IDMuMjMtLjI5IDQuNTkuMS42OC41Ljk1LjgzIDEuMjYuMDEuMTguMDQuNzkuMDYgMS4xMyA4LjA0LjcxIDE1LjUgNC4zOSAyMC45OSAxMC4xNGwuOTYtLjY5Yy4zMy4wMiAxLjA0LjEyIDEuNTMtLjE3IDEuMTMtLjc2IDIuMTYtMS44MiAzLjQxLTMuMDguNTctLjYxLjk5LTEuMTggMS42Ny0xLjc3LjE1LS4xMy4zOS0uMzEuNTYtLjQ1IDEuMjEtLjk3IDIuOS0uODYgMy43Ny4yM3MuNTkgMi43Ni0uNjIgMy43M2MtLjE3LjE0LS4zOS4zMy0uNTYuNDUtLjcyLjUzLTEuMzguOC0yLjEgMS4yMy0xLjUxLjkzLTIuNzcgMS43MS0zLjc2IDIuNjQtLjQ3LjUtLjQzLjk4LS40OCAxLjQzLS4xNC4xMy0uNjMuNTctLjkuOGEzMi43NSAzMi43NSAwIDAxNC43NCAxMC45NWMuOTIgMy45OSAxLjA2IDcuOTcuNTMgMTEuOGwxLjAyLjNjLjE4LjI2LjU2Ljg5IDEuMDkgMS4xIDEuMy40MSAyLjc2LjU2IDQuNTMuNzUuODMuMDcgMS41NS4wMyAyLjQzLjE5LjIxLjA0LjUyLjEyLjczLjE3IDEuNS4zNyAyLjQ1IDEuNzQgMi4xNCAzLjA5eiIvPjxwYXRoIGQ9Ik04Ni4yNzQgNTIuMzU4bC05Ljg4IDguODQuMDEuMDNjLS4zNC4zLS42LjctLjcxIDEuMTgtLjI3IDEuMTcuNDQgMi4zMyAxLjU4IDIuNjVsLjAxLjA1IDEyLjc5IDMuNjhjLjI3LTIuNzYuMTEtNS42Mi0uNTUtOC40OC0uNjYtMi44OS0xLjc3LTUuNTYtMy4yNS03Ljk1eiIvPjwvZz48L3N2Zz4=" alt="Kubernetes"><span class="bx-t2">APPLICATION DEV</span><span class="bx-t3">CKAD</span></div>
+<div class="certx-name">Certified Kubernetes App Developer</div>
+<div class="certx-level">CKAD</div>
+<div class="certx-issuer">Linux Foundation / CNCF</div>
+</div>
+</div>
 
     </div>
   </div>

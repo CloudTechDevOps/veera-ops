@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reviews & Placements — Multi Cloud DevOps with AI by veera sir NareshIT</title>
+<meta name="description" content="Student reviews and placement success stories for Multi Cloud DevOps training by veera sir, NareshIT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<nav class="navbar">
+  <a class="logo" href="../index.html" style="text-decoration:none">Multi Cloud DevOps with AI by veera sir NareshIT</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html" id="nb-home">🏠 Home</a></li>
+    <li><a href="aws.html" id="nb-aws">☁️ AWS</a></li>
+    <li><a href="azure.html" id="nb-azure">🔷 Azure</a></li>
+    <li><a href="gcp.html" id="nb-gcp">🌐 GCP</a></li>
+    <li><a href="devops.html" id="nb-devops">⚙️ DevOps</a></li>
+    <li><a href="genai.html" id="nb-genai">🤖 Gen AI</a></li>
+    <li><a href="reviews.html" id="nb-reviews" class="nav-active">🌟 Reviews</a></li>
+    <li><a href="projects.html" class="nav-cta" id="nb-projects">🚀 Projects</a></li>
+  </ul>
+  <div class="hamburger" id="ham">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="page active" id="page-reviews" style="--pc:#fbbf24;--pc2:#f472b6">
+  <div class="syl-hero rev-hero">
+    <div class="syl-hero-inner">
+      <span class="syl-ico">🌟</span>
+      <h1>Student Reviews & Placements</h1>
+      <p>Real feedback, real career wins — straight from the batch</p>
+      <div class="rev-rating-badge"><span class="stars">★★★★★</span>5.0 <span>· verified course reviews</span></div>
+    </div>
+  </div>
+  <div class="rev-stats-bar stats-bar">
+    <div class="stat-item"><div class="stat-n">20K+</div><div class="stat-l">Students Trained</div></div>
+    <div class="stat-item"><div class="stat-n">16</div><div class="stat-l">Featured Reviews</div></div>
+    <div class="stat-item"><div class="stat-n">16</div><div class="stat-l">Placement Stories</div></div>
+    <div class="stat-item"><div class="stat-n">5.0★</div><div class="stat-l">Average Rating</div></div>
+  </div>
+<div class="devops-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+    <div class="ticker-item">Free Python + Linux for Multi-Cloud DevOps Students</div>
+    <div class="ticker-item">New Batch Starting Soon!</div>
+  </div>
+</div>
+<div class="syl-main">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#ff7849,#ff7a59)">
+        <div class="sec-hdr-ico">🎥</div>
+        <div class="sec-hdr-info"><h2>VEERA CLOUD</h2><p>Veera cloud platform introduction</p></div>
+      </div>
+      <div style="padding:20px">
+        <video controls muted style="width:100%;max-height:420px;border-radius:16px;border:1px solid var(--border);background:#0b1020">
+          <source src="../docs/v1.MP4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <div class="rev-tabs">
+      <button class="rev-tab active" id="revTabReviews" onclick="switchRevTab('reviews')">💬 Student Reviews</button>
+      <button class="rev-tab" id="revTabPlacements" onclick="switchRevTab('placements')">🎯 Placement Gallery</button>
+    </div>
+
+    <div class="rev-panel active" id="rev-panel-reviews">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#7a0c2e,#ef233c)">
+        <div class="sec-hdr-ico">💬</div>
+        <div class="sec-hdr-info"><h2>Student Reviews</h2><p>16 verified reviews · ⭐⭐⭐⭐⭐</p></div>
+      </div>
+      <div class="reviews-grid" id="reviewsGrid"></div>
+    </div>
+    </div>
+
+    <div class="rev-panel" id="rev-panel-placements">
+    <div class="syl-section">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#38ef7d,#11998e)">
+        <div class="sec-hdr-ico">🎯</div>
+        <div class="sec-hdr-info"><h2>Placement Gallery</h2><p>Students who got placements</p></div>
+      </div>
+      <div class="placement-grid" id="placementGrid"></div>
+    </div>
+    </div>
+
+    <div class="syl-section" style="margin-top:16px">
+      <div class="sec-hdr" style="background:linear-gradient(135deg,#f5576c,#7a0c2e)">
+        <div class="sec-hdr-ico">🎬</div>
+        <div class="sec-hdr-info"><h2>Students Feedback Videos</h2><p>Watch student feedback videos</p></div>
+      </div>
+      <ul class="video-list">
+        <li><a class="video-link" href="https://www.instagram.com/reel/DWYnUyHOTWo" target="_blank" rel="noopener">
+          <div class="video-card"><div class="video-thumb"><div class="play-fab">&#9654;</div></div>
+          <div class="video-info"><div class="video-title">DevOps Engineer — Sheikh Tahir</div><div class="video-sub">Student Review</div></div></div>
+        </a></li>
+        <li><a class="video-link" href="https://www.instagram.com/reel/DWTgs_JgPxK" target="_blank" rel="noopener">
+          <div class="video-card"><div class="video-thumb"><div class="play-fab">&#9654;</div></div>
+          <div class="video-info"><div class="video-title">Cloud Engineer HEPIN AMIPARA</div><div class="video-sub">Student Review</div></div></div>
+        </a></li>
+        <li><a class="video-link" href="https://www.instagram.com/reel/DJTLXAvgBsS" target="_blank" rel="noopener">
+          <div class="video-card"><div class="video-thumb"><div class="play-fab">&#9654;</div></div>
+          <div class="video-info"><div class="video-title">Support Engineer — Hemanth Kumar</div><div class="video-sub">Student Review</div></div></div>
+        </a></li>
+        <li><a class="video-link" href="https://www.instagram.com/reel/DJBa0EJPJmX" target="_blank" rel="noopener">
+          <div class="video-card"><div class="video-thumb"><div class="play-fab">&#9654;</div></div>
+          <div class="video-info"><div class="video-title">DevOps Engineer — Hemanth</div><div class="video-sub">Student Review</div></div></div>
+        </a></li>
+        <li><a class="video-link" href="https://www.instagram.com/reel/DIJUJdIAVHx" target="_blank" rel="noopener">
+          <div class="video-card"><div class="video-thumb"><div class="play-fab">&#9654;</div></div>
+          <div class="video-info"><div class="video-title">DevOps Engineer — Jai Swamy</div><div class="video-sub">Student Review</div></div></div>
+        </a></li>
+        <li><a class="video-link" href="https://www.instagram.com/reel/DIJDa9fAKxH" target="_blank" rel="noopener">
+          <div class="video-card"><div class="video-thumb"><div class="play-fab">&#9654;</div></div>
+          <div class="video-info"><div class="video-title">DevOps Engineer — Keerthana</div><div class="video-sub">Student Review</div></div></div>
+        </a></li>
+        <li><a class="video-link" href="https://www.instagram.com/reel/DIECGPGg3Ez" target="_blank" rel="noopener">
+          <div class="video-card"><div class="video-thumb"><div class="play-fab">&#9654;</div></div>
+          <div class="video-info"><div class="video-title">DevOps Engineer — Rajeev</div><div class="video-sub">Student Review</div></div></div>
+        </a></li>
+      </ul>
+    </div>
+  </div>
+  <footer>
+    <div class="foot-brand">Multi Cloud DevOps with AI by veera sir NareshIT</div>
+    <ul class="foot-links">
+      <li><a href="aws.html">☁️ AWS</a></li>
+      <li><a href="azure.html">🔷 Azure</a></li>
+      <li><a href="gcp.html">🌐 GCP</a></li>
+      <li><a href="devops.html">⚙️ DevOps</a></li>
+      <li><a href="genai.html">🤖 Gen AI</a></li>
+      <li><a href="projects.html">🚀 Projects</a></li>
+    </ul>
+    <div class="foot-copy">© 2026 · Trainer: veera sir — NareshIT</div>
+  </footer>
+</div>
+
+<div class="lightbox" id="reviewLightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-nav lightbox-prev" id="reviewLightboxPrev" aria-label="Previous">‹</button>
+    <button class="lightbox-nav lightbox-next" id="reviewLightboxNext" aria-label="Next">›</button>
+    <button class="lightbox-close" id="reviewLightboxClose">✕</button>
+    <img class="lightbox-img" id="reviewLightboxImg" alt="Review image">
+    <div class="lightbox-caption" id="reviewLightboxCaption"></div>
+    <div class="lightbox-counter" id="reviewLightboxCounter"></div>
+  </div>
+</div>
+
+<script src="../assets/logos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/2.12.0/tsparticles.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="../assets/app.js"></script>
+</body>
+</html>
